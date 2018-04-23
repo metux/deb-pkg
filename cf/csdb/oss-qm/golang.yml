@@ -1,0 +1,4 @@
+---
+package:    golang
+git.url:    git@github.com:oss-qm/go.git
+git.branch: debian/maint-${package.version}

@@ -1,0 +1,4 @@
+---
+package:    labgrid
+git.url:    git@github.com:metux/${package.name}.git
+git.branch: debian/maint-${package.version}

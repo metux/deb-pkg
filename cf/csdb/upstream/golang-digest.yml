@@ -1,0 +1,4 @@
+---
+package:      golang-digest
+git.url:      https://github.com/opencontainers/go-digest
+git.branch:   master

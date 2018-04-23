@@ -1,0 +1,3 @@
+---
+package:      golang-defaults
+git.url:      https://salsa.debian.org/go-team/compiler/golang-defaults.git

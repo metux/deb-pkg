@@ -1,0 +1,4 @@
+---
+package:    golang-defaults
+git.url:    git@github.com:oss-qm/debian.golang-defaults.git
+git.branch: master
