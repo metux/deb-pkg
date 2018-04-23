@@ -6,6 +6,7 @@ from targetspec import TargetSpec
 from poolspec import PoolSpec
 from pkgspec import PkgSpec
 from metux.csdb import CSDB
+from metux.pypi.conf import PyPiConf
 from metux.log import info, warn, err
 
 """global configuration"""
@@ -26,6 +27,7 @@ class Config(object):
             info("loaded config: "+fn)
 
         self.csdb = CSDB(self.get_pathconf('csdb-path'))
+        self.pypi = PyPiConf(self.get_pathconf('pypi-import-conf'))
 
     """get package object by name"""
     def get_package(self, name):

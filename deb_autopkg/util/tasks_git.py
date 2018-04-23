@@ -1,6 +1,7 @@
 from deb_autopkg.util.task import Task, TaskFail
 from metux.git import GitRepo
 from metux.log import warn, info
+from metux.pypi import debian
 
 """Task: clone an git repo w/ initial checkout"""
 class GitCloneTask(Task):
@@ -13,6 +14,10 @@ class GitCloneTask(Task):
 
         for remote in spec['remotes']:
             repo.set_remote(remote, spec['remotes'][remote]['url'])
+
+        pypi = spec.get('pypi', None)
+        if pypi is not None:
+            ret = debian.create_package(pypi, repo)
 
         if not repo.is_checked_out():
             if (not 'init-ref' in spec) or (spec['init-ref'] is None):

@@ -1,0 +1,5 @@
+$src_pkg ($version-1) UNRELEASED; urgency=medium
+
+  * automatic import and debianization
+
+ -- $maintainer  Mon, 07 Oct 2019 11:21:59 +0100

@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+%:
+	dh $$@ --with python2,python3 --buildsystem=pybuild
+
+override_dh_auto_clean:
+	if [ -f bootstrap.py ] ; then python ./bootstrap.py ; else dh_auto_clean -O--buildsystem=pybuild ; fi
+
+override_dh_auto_test:
+	@echo "Skipping tests"
