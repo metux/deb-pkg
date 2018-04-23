@@ -1,0 +1,25 @@
+pathes:
+    csdb-path:              cf/csdb
+
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master
+
+targets:
+    - dng-ascii-i386
+
+packages:
+
+    python-evdev@1.1.2:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    ds4drv@master:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+        depends:
+            - python-evdev@1.1.2
+
+pools:
+
+    default:
+        packages:
+            - ds4drv@master
