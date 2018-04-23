@@ -1,0 +1,6 @@
+
+* FR: allow auto-defining package info via pypi, so we can depend on them
+  in pool/package specs w/ explicitly defining them - in that case the
+  version and branch is retrieved by pypi importer config
+* retrieve dependencies from pypi
+* version-specific imports

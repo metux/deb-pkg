@@ -1,0 +1,133 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    - stretch-amd64
+
+## FIXME: python-alabaster might not be needed anymore
+
+packages:
+
+    labgrid:
+        my-url:             git@github.com:metux/labgrid.git
+        my-branch:          debian/master
+        autobuild-branch:   my/debian/master
+#        depends:
+#            - dh-virtualenv@0.11           # FIXME: really needed ?
+#            - python-attrs@17.4.0
+#            - pytest-runner
+
+    python-attrs@16.3.0:
+        my-url:             git@github.com:oss-qm/python-attrs.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+
+    python-attrs@17.4.0:
+        my-url:             git@github.com:oss-qm/python-attrs.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+        depends:
+            # jessie's dh-python seems to be buggy
+            - dh-python@2.20170125
+#            - dh-python@3.2
+#            - python-alabaster@0.7.8
+
+    pytest-runner:
+        my-url:             git@github.com:oss-qm/python-pytest-runner.git
+#        my-branch:          debian/16.3.0
+#        autobuild-branch:   my/debian/16.3.0
+#        depends:
+#            # jessie's dh-python seems to be buggy
+#            - dh-python/2.20170125
+#            - dh-python/3.2
+#            - python-alabaster-0.7.8
+
+    dh-virtualenv@0.11:
+        autobuild-branch:   refs/tags/0.11
+
+    python-attrs:
+        my-url:             git@github.com:oss-qm/python-attrs.git
+        my-branch:          debian/master
+        depends:
+            - dh-python@3.2
+            - python-setuptools@33.1.1
+            - python-hypothesis@3.4.2
+            - python-alabaster@0.7.8
+            - python-pytest@3.0.3
+
+    dh-python@3.2:
+        autobuild-branch:   refs/tags/3.20180723
+
+    dh-python@2.20170125:
+        autobuild-branch:   my/debian/${package.version}
+        my-url:             git@github.com:oss-qm/dh-python.git
+        my-branch:          debian/${package.version}
+
+    python-setuptools@33.1.1:
+        my-url:             git@github.com:oss-qm/python-setuptools.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   debian/${package.version}
+
+    python-hypothesis@3.4.2:
+        my-url:             git@github.com:oss-qm/python-hypothesis.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+
+    pypy-hypothesis@3.44.1:
+        my-url:             git@github.com:oss-qm/python-hypothesis.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+
+    python-alabaster@0.7.8:
+        my-url:             git@github.com:oss-qm/python-alabaster.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+
+    python-pytest@3.0.3:
+        my-url:             git@github.com:oss-qm/python-pytest.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+        depends:
+            - python-py@1.4.31
+
+    pypy-py@1.4.32:
+        my-url:             git@github.com:oss-qm/pypy-py.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+
+    python-py@1.4.31:
+        my-url:             git@github.com:oss-qm/python-py.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+        depends:
+            - pypy-setuptools-scm@3.0.6
+
+    python-setuptools-scm@1.15.0:
+        my-url:             git@github.com:oss-qm/pypy-setuptools-scm.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+
+    pypy-setuptools-scm@3.0.6:
+        my-url:             git@github.com:oss-qm/pypy-setuptools-scm.git
+        my-branch:          debian/${package.version}
+        autobuild-branch:   my/debian/${package.version}
+        depends:
+            - pypy-py@1.4.32
+            - pypy-pytest@3.0.6
+
+    pypy-pytest@3.0.6:
+        my-url:             git@github.com:oss-qm/pypy-pytest.git
+        my-branch:          debian/3.0.6
+        autobuild-branch:   my/debian/3.0.6
+
+pools:
+
+    labgrid:
+        packages:
+#           - python-attrs@17.4.0
+            - labgrid
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master

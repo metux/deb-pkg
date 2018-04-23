@@ -1,6 +1,8 @@
 ---
 maintainer: Enrico Weigelt, metux IT consult <info@metux.net>
 packages:
+    attrs:
+        version: 19.3.0
     setuptools:
         version: 41.4.0
         skip_tests: yes
@@ -21,3 +23,23 @@ packages:
         version: 0.4.1
     backports.ssl-match-hostname:
         version: 3.7.0.1
+    jinja2:
+        version: 2.10.3
+    pexpect:
+        version: 4.7.0
+    pytest:
+        version: 5.2.1
+    pyudev:
+        version: 0.21.0
+    requests:
+        version: 2.22.0
+    xmodem:
+        version: 0.4.5
+    autobahn:
+        version: 19.10.1
+    PyYAML:
+        version: 5.1.2
+    ansicolors:
+        version: 1.1.8
+    pyusb:
+        version: 1.0.2

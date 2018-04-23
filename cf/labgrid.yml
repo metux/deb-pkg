@@ -1,0 +1,80 @@
+pathes:
+    csdb-path:              cf/csdb
+    pypi-import-conf:       cf/csdb/pypi-import.yml
+
+targets:
+    - stretch-amd64
+    - stretch-i386
+
+packages:
+
+    python-pytest@5.2.1:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-attrs@19.3.0:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-jinja2@2.10.3:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-pexpect@4.7.0:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-pytest@4.6.3:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-pyudev@0.21.0:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-requests@2.22.0:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-xmodem@0.4.5:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-autobahn@19.10.1:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-PyYAML@5.1.2:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-ansicolors@1.1.8:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-pyusb@1.0.2:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    labgrid:
+        my-url:             git@github.com:metux/labgrid.git
+        my-branch:          debian/master
+        autobuild-branch:   my/debian/master
+        depends:
+            - python-attrs@19.3.0
+            - python-jinja2@2.10.3
+            - python-pexpect@4.7.0
+            - python-pytest@5.2.1
+            - python-pyudev@0.21.0
+            - python-requests@2.22.0
+            - python-xmodem@0.4.5
+            - python-autobahn@19.10.1
+            - python-PyYAML@5.1.2
+            - python-ansicolors@1.1.8
+            - python-pyusb@1.0.2
+# https://github.com/labgrid-project/pyserial/archive/v3.4.0.1.zip#egg=pyserial
+
+#    pyjutest:
+#        my-url:             git@github.com:metux/pyjutest.git
+#        my-branch:          debian/master
+#        autobuild-branch:   my/debian/master
+
+pools:
+
+    labgrid:
+        packages:
+            - labgrid
+#            - pyjutest
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master

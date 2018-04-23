@@ -1,0 +1,4 @@
+---
+package:      labgrid
+git.url:      https://github.com/labgrid-project/labgrid.git
+git.branch:   master
