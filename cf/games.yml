@@ -1,0 +1,26 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    - dng-ascii-i386-mini
+
+packages:
+
+    qt5-qtbase:
+
+    warzone2100:
+        my-url:             git@github.com:oss-qm/warzone2100.git
+        autobuild-branch:   my/debian_hack
+        depends:
+            - qt5-qtbase
+
+pools:
+
+    default:
+        packages:
+            - warzone2100
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master

@@ -1,0 +1,3 @@
+---
+package:      qt5-qtbase
+git.url:      git://anonscm.debian.org/pkg-kde/qt/qtbase.git
