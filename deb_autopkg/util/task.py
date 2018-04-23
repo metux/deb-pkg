@@ -11,6 +11,7 @@ class Task(object):
         self.param = param
         self.name = param['name']
         self._my_done = False
+        self.depends = []
 
     def get_name(self):
         return self.name
@@ -25,6 +26,11 @@ class Task(object):
                 fail("subtask #"+str(x)+" is not Task")
             x = x+1
         return tasklist
+
+    def add_depend(self, task):
+        if not isinstance(task, Task):
+            fail("subtask #"+str(x)+" is not Task")
+        self.depends.append(task)
 
     # private !
     def run_subtasks(self):

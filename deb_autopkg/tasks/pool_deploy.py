@@ -15,6 +15,7 @@ class PoolDeployTask(Task):
         self.log_info("Deploying DUT: %s" % dut.name)
         if not (dut.apt_upgrade() and
                 dut.apt_install(pool.get_latest_debs(dut.get_target_name()))):
+            self.log_warn("DUT: apt deployment failed")
             return False
 
         if dut.get_post_deploy_reboot():
