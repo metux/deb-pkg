@@ -66,7 +66,7 @@ class PkgBuildZypperTask(Task):
             self.fail("zypper build failed: rpmbuild call failed")
 
         # copy the source rpm
-        zyprepo_src = abspath(self.target['target.zyprepo']+'/srpm')
+        zyprepo_src = abspath(self.target['zyp-repo::path']+'/srpm')
         mkdir(zyprepo_src)
         for s in glob(self.pkg['zypper.rpm.tmpdir']+'/SRPMS/*.src.rpm'):
             shutil.copy(s, zyprepo_src)
@@ -90,7 +90,7 @@ class PkgBuildZypperTask(Task):
                   '-e',
                   'UID='+str(getuid()),
                   '-v',
-                  abspath(self.target['target.zyprepo'])+':/usr/src/packages/repo',
+                  abspath(self.target['zyp-repo::path'])+':/usr/src/packages/repo',
                   '--mount',
                   'source='+cache_volume+',target=/var/cache/zypp',
                   '-it',
@@ -105,7 +105,7 @@ class PkgBuildZypperTask(Task):
         with schroot.create_session(self.target['zypper::schroot::image'], 'root') as session:
             if (session.call([self.target['zypper::schroot::script'],
                               self.pkg['rpm-name'],
-                              self.target['target.zyprepo'],
+                              self.target['zyp-repo::path'],
                               ('%d:%d' % (getuid(), getgid())),
                               abspath(self.target['zypper::schroot::cache']),
                               self.target['arch'],

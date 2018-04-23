@@ -18,17 +18,21 @@ class TargetSpec(SpecObject):
             'POOL':           pool,
             'config.basedir': "${GLOBAL::config.basedir}",
             'config.prefix':  "${GLOBAL::config.prefix}",
+            'name':           name,
             'target.name':    name,
-            'target.aptrepo': lambda: self.get_aptrepo_path(),
-            'target.zyprepo': lambda: self.get_zyprepo_path(),
             'pool.name':      lambda: 'global' if self.pool is None else self.pool['pool.name'],
+            'dck-buildpackage::target':   "${dck-buildpackage::target}",
+            'apt-repo::ident':            "${name}",
+            'apt-repo::path':             lambda: self.get_aptrepo_path(),
+            'zyp-repo::ident':            "${name}",
+            'zyp-repo::path':             lambda: self.get_zyprepo_path(),
         })
 
     def get_aptrepo_path(self):
         if self.pool is None:
             raise SpecError("no pool - dont have an aptrepo")
         else:
-            return self.pool['pool.aptrepo']
+            return self.pool['pool.aptrepo']+'/'+self['apt-repo::ident']
 
     def get_zyprepo_path(self):
         if self.pool is None:

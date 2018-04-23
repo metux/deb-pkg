@@ -18,17 +18,20 @@ class PkgBuildAptTask(Task):
         self.statfile = self.target.get_pkg_build_statfile(self.pkg)
 
     def do_run(self):
-        pkg_name    = self.pkg.name
-        target_name = self.target['target.name']
-        pool_name   = self.target['pool.name']
-        dckbp_cmd   = self.conf.get_dckbp_cmd()
+        pkg_name  = self.pkg.name
+        tgt       = self.target
 
         env = copy(environ)
-        env['DCK_BUILDPACKAGE_TARGET_REPO'] = self.target['target.aptrepo']
+        env['DISTRO_TARGET_REPO'] = tgt['apt-repo::path']
         env['DCK_BUILDPACKAGE_SOURCE'] = pkg_name
 
-        self.log_info('building "'+pkg_name+'" from '+pool_name+' for '+target_name)
-        if (call([dckbp_cmd, '--target', target_name],
+        self.log_info(
+            'building "%s" from %s for %s aptrepo: %s' %
+            (pkg_name, tgt['pool.name'], tgt['target.name'], tgt['apt-repo::path']))
+
+        if (call([self.conf.get_dckbp_cmd(),
+                  '--target',
+                  self.target['dck-buildpackage::target']],
                  cwd=self.pkg['package.src'],
                  env=env) != 0):
             self.fail("build failed: "+pkg_name)
