@@ -1,0 +1,26 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    - stretch-amd64
+
+packages:
+
+    dosfstools:
+        autobuild-branch:    oss-qm/debian/maint-${package.version}
+        repos:
+            pali:       https://github.com/pali/dosfstools.git
+            arnout:     https://github.com/arnout/dosfstools.git
+            fstirlitz:  https://github.com/fstirlitz/dosfstools.git
+            dmo2118:    https://github.com/dmo2118/dosfstools.git
+
+pools:
+
+    default:
+        packages:
+            - dosfstools
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master
