@@ -1,0 +1,54 @@
+pathes:
+    csdb-path:              cf/csdb
+    pypi-import-conf:       cf/csdb/pypi-import.yml
+
+targets:
+    # added trusty-updates and trusty-backports repo
+    - trusty-i386
+
+packages:
+
+    docker-compose:
+        autobuild-branch:   debian/master
+
+    dh-virtualenv@1.1:
+        autobuild-branch:   refs/tags/${package.version}
+
+    python-cached-property@1.5.1:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-texttable@1.6.2:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-backports.ssl-match-hostname@3.7.0.1:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-websocket-client@0.56.0:
+        autobuild-branch:   pypi/debian/${package.version}
+        depends:
+            - python-backports.ssl-match-hostname@3.7.0.1
+
+    python-setuptools@41.4.0:
+        autobuild-branch:   pypi/debian/${package.version}
+
+    python-docker@4.1.0:
+        autobuild-branch:   pypi/debian/${package.version}
+        depends:
+            - python-setuptools@41.4.0
+            - python-websocket-client@0.56.0
+
+    python-dockerpty@0.4.1:
+        autobuild-branch:   pypi/debian/${package.version}
+        pypi-import:
+            version: ${package.version}
+
+pools:
+
+    docker-compose:
+        packages:
+            - python-docker@4.1.0
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master
