@@ -1,0 +1,27 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    # added trusty-updates and trusty-backports repo
+    - dng-ascii-i386
+
+packages:
+
+    wizardry7:
+        my-url:             git@github.com:metux/wizardry7.git
+        autobuild-branch:   my/master
+
+    mc:
+        autobuild-branch:   oss-qm/wip/mtx
+
+pools:
+
+    default:
+        packages:
+#            - mc
+            - wizardry7
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master
