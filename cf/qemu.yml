@@ -1,0 +1,68 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    # added trusty-updates and trusty-backports repo
+    - trusty-i386
+
+packages:
+
+    device-tree-compiler:
+
+    # older qemu release
+    qemu@2.8.0:
+        my-url:             git@github.com:oss-qm/qemu.git
+        my-branch:          deb-v${package.version}
+        autobuild-branch:   my/deb-v${package.version}
+        depends:
+            - virgilrenderer
+            - libvte@2.91
+            - seabios
+
+    ## WIP
+    qemu:
+        my-url:             git@github.com:oss-qm/qemu.git
+        my-branch:          debian/3.0-rc4
+        autobuild-branch:   my/debian/3.0-rc4
+        depends:
+            - device-tree-compiler
+            - virgilrenderer
+            - libvte-2.91
+            - seabios
+            - keycodemapdb
+
+    seabios:
+        autobuild-branch:   debian/debian-unstable
+        my-url:             git@github.com:oss-qm/debian-seabios.git
+        my-branch:          debian
+        autobuild-branch:   my/debian
+
+    virgilrenderer@0.5.0:
+        upstream-tag:       virglrenderer-${package.version}
+        my-url:             git@github.com:oss-qm/virglrenderer.git
+        autobuild-branch:   my/debian/${package.version}
+
+    libvte@2.91:
+        my-url:             git@github.com:oss-qm/vte.git
+        my-branch:          debian
+        autobuild-branch:   my/debian
+        upstream-tag:       0.38.1
+
+    keycodemapdb:
+        my-url:             git@github.com:oss-qm/keycodemapdb.git
+        my-branch:          debian/master
+        autobuild-branch:   my/debian/master
+
+pools:
+
+    qemu-dev:
+        packages:
+#            - device-tree-compiler
+#            - seabios
+#            - virgilrenderer
+            - qemu
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master

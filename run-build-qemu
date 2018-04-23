@@ -1,0 +1,4 @@
+#!/usr/bin/python
+
+from deb_autopkg import cmd
+cmd.build_pool("cf/qemu.yml", "qemu-dev")
