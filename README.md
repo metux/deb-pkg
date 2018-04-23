@@ -1,3 +1,14 @@
+Trusty revamping (backports)
+=============================
+
+Preconfigured deb-pkg instance (see down below) to build several
+backports for old Ubuntu trusty.
+
+This is useful for folks who still need to run old Ubuntu Trusty
+systems and can't upgrade easily (eg. dont wanna poison their
+machines with systemd :p)
+
+
 Little Debian packaging helper
 ===============================
 
