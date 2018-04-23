@@ -1,3 +1,9 @@
+Debian Chimerea backports
+==================================
+
+Preconfigured deb-pkg instance (see down below) to build several
+backports for Debian Chimerea.
+
 Little Debian packaging helper
 ===============================
 

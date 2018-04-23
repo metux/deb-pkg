@@ -49,6 +49,14 @@ packages:
             - devuan/unstable/i386
             - devuan/unstable/amd64
 
+### misc dependencies
+
+    raft@master:
+
+    dqlite@master:
+        depends:
+            - raft@master
+
 ### container tools
 
     runc@master:
@@ -68,9 +76,17 @@ packages:
         depends:
             - golang-defaults@1.19
 
+    moby-engine@master:
+
     nerdctl@master:
         depends:
             - golang-defaults@1.20
+
+### lxc devel
+
+    lxc-incus@master:
+        depends:
+            - dqlite@master
 
 pools:
     default:
@@ -79,4 +95,7 @@ pools:
             - containerd-cgroups@master
             - containerd@master
             - nerdctl@master
+            - dqlite@master
+#            - lxc-incus@master
             - docker-cli@master
+#            - moby-engine@master
