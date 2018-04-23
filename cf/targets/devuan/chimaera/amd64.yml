@@ -1,0 +1,11 @@
+arch: amd64
+
+packager: apt
+
+dck-buildpackage:
+    target: dng-${apt-repo::suite}-${arch}
+
+apt-repo:
+    # put all architectures into one repo
+    suite: chimaera
+    ident: devuan/${apt-repo::suite}
