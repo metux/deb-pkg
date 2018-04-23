@@ -1,3 +1,9 @@
+Debian Beowulf revamping (backports)
+==================================
+
+Preconfigured deb-pkg instance (see down below) to build several
+backports for Debian Beowulf.
+
 Little Debian packaging helper
 ===============================
 

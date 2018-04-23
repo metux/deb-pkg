@@ -1,0 +1,34 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    # added trusty-updates and trusty-backports repo
+    - dng-beowulf-i386
+
+defaults:
+    packages:
+        autobuild-ref:  oss-qm/debian/maint-${package.version}
+
+packages:
+
+    runc@master:
+
+    containerd@master:
+
+    docker-cli@master:
+
+    moby-engine@master:
+
+pools:
+
+    default:
+        packages:
+            - runc@master
+            - containerd@master
+            - moby-engine@master
+            - docker-cli@master
+
+# configuration for automatically fetching the dck-buildpackage tool
+#dck-buildpackage:
+#    - git-url:      git@github.com:metux/docker-buildpackage.git
+#    - git-branch:   master
