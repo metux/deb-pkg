@@ -1,0 +1,4 @@
+#!/usr/bin/python
+
+from metux.pypi.debian import run_auto_import
+run_auto_import('cf/csdb/pypi-import.yml')

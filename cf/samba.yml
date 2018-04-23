@@ -1,0 +1,54 @@
+pathes:
+    csdb-path:              cf/csdb
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master
+
+targets:
+    # added trusty-updates and trusty-backports repo
+#    - trusty-i386
+    - dng-ascii-i386
+
+packages:
+
+    samba@4.9.2:
+        my-url:             git@github.com:oss-qm/${package.name}.git
+        my-branch:          dng-${package.version}
+        autobuild-branch:   my/dng-${package.version}
+        depends:
+            - cmocka@1.1.1
+            - tdb@1.3.16
+            - talloc@2.1.14
+            - tevent@0.9.37
+            - ldb@1.4.3
+
+    talloc@2.1.14:
+        my-url:             git@github.com:oss-qm/${package.name}.git
+        my-branch:          debian/maint-${package.version}
+        autobuild-branch:   my/debian/maint-${package.version}
+
+    tevent@0.9.37:
+        my-url:             git@github.com:oss-qm/${package.name}.git
+        my-branch:          debian/maint-${package.version}
+        autobuild-branch:   my/debian/maint-${package.version}
+
+    tdb@1.3.16:
+        my-url:             git@github.com:oss-qm/${package.name}.git
+        my-branch:          debian/maint-${package.version}
+        autobuild-branch:   my/debian/maint-${package.version}
+
+    ldb@1.4.3:
+        my-url:             git@github.com:oss-qm/${package.name}.git
+        my-branch:          debian/maint-${package.version}
+        autobuild-branch:   my/debian/maint-${package.version}
+
+    cmocka@1.1.1:
+        autobuild-branch:   debian/1.1.1-1
+
+pools:
+
+    samba:
+        packages:
+            - samba@4.9.2
