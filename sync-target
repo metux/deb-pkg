@@ -1,0 +1,7 @@
+#!/bin/bash
+
+TARGET_HOST="root@ostwind"
+TARGET_REPO="/var/lib/repos/ostwind/"
+
+ssh $TARGET_HOST -- "mkdir -p $TARGET_REPO"
+rsync --rsh=ssh -avzr .aptrepo/default/dng-ascii-i386/ $TARGET_HOST:$TARGET_REPO

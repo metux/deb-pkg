@@ -1,0 +1,35 @@
+targets:
+    - devuan/chimaera/i386
+    - devuan/chimaera/amd64
+
+defaults:
+    packages:
+        autobuild-ref: oss-qm/debian/maint-${package.version}
+
+packages:
+
+    ds4drv@master:
+
+    mc@master:
+
+    kernel:
+        autobuild-branch:    my/ascii/master
+        my-url:              git@github.com:metux/linux.git
+        my-branch:           ascii/master
+        upstream-url:        git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+        remotes:
+            linus:      git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+            stable:     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+            gpio:       https://kernel.googlesource.com/pub/scm/linux/kernel/git/linusw/linux-gpio
+            serial:     git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git
+            kasan:      https://github.com/google/kasan.git
+            wandboard:  https://github.com/wandboard-org/linux
+            nitrogen:   https://github.com/boundarydevices/linux-imx6
+
+pools:
+
+    default:
+        packages:
+            - kernel
+            - mc@master
+            - ds4drv@master

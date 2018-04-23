@@ -1,3 +1,5 @@
+System: ostwind
+
 Little Debian packaging helper
 ===============================
 

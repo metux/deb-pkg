@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./repo-build-pool cf/repos/ostwind.yml
