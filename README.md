@@ -1,3 +1,9 @@
+Debian ASCII revamping (backports)
+==================================
+
+Preconfigured deb-pkg instance (see down below) to build several
+backports for Debian ASCII.
+
 Little Debian packaging helper
 ===============================
 

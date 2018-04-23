@@ -1,0 +1,79 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    # added trusty-updates and trusty-backports repo
+    - dng-ascii-i386
+
+packages:
+
+    wizardry7:
+        my-url:             git@github.com:metux/wizardry7.git
+        autobuild-branch:   my/master
+
+    mc:
+        autobuild-branch:   oss-qm/wip/mtx
+
+    docker-enter@0.1:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    thunar@1.6.11:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    lxc@3.2.1:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    lxcfs@3.0.4:
+        autobuild-branch:   debian/master
+
+    enigmail@2.3.1:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    libmixp:
+        autobuild-branch:   upstream/master
+
+    libmixpsrv:
+        autobuild-branch:   upstream/master
+        depends:
+            - libmixp
+
+    golang@1.10:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    golang-github-pkg-errors@0.8.1:
+        debian-url:         https://anonscm.debian.org/git/pkg-go/packages/golang-github-pkg-errors.git
+        autobuild-branch:   debian/master
+        depends:
+            - golang@1.10
+
+    libvirt@5.6.0:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    neomutt@20191207:
+        autobuild-branch:   master
+
+    schroot@1.7.999:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+pools:
+
+    default:
+        packages:
+            - docker-enter@0.1
+#            - neomutt@20191207
+#            - golang-github-pkg-errors@0.8.1
+#            - libvirt@5.6.0
+#            - golang@1.10
+#            - enigmail@2.3.1
+#            - thunar@1.6.11
+            - lxc@3.2.1
+            - lxcfs@3.0.4
+#            - libmixp
+#            - mc
+            - wizardry7
+            - schroot@1.7.999
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master
