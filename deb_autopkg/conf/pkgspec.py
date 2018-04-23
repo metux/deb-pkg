@@ -49,6 +49,10 @@ class PkgSpec(object):
         for dbn in self.conf.csdb.get_dbnames():
             self._load_db(dbn)
 
+        # try to automatically import python packages
+        if self.package_name.startswith('python-'):
+            self._my_pypi = self.conf.pypi.get_package(self.package_name[7:], self.package_version)
+
     """[private] substitute variables"""
     def _substvar(self, v):
         if self.package_version is not None:
@@ -104,5 +108,10 @@ class PkgSpec(object):
         return {
             'path':        self.git_repo_dir(),
             'remotes':     remotes,
+            'pypi':        self.get_pypi_import_conf(),
             'init-branch': 'autobuild',
             'init-ref':    self.get_autobuild_branch() }
+
+    """get pypi import configuration"""
+    def get_pypi_import_conf(self):
+        return self._my_pypi

@@ -1,0 +1,23 @@
+---
+maintainer: Enrico Weigelt, metux IT consult <info@metux.net>
+packages:
+    setuptools:
+        version: 41.4.0
+        skip_tests: yes
+    cached-property:
+        version: 1.5.1
+    texttable:
+        version: 1.6.2
+    websocket-client:
+        version: 0.56.0
+        pypi-py2-depends:
+            - backports.ssl-match-hostname
+    docker:
+        version: 4.1.0
+        pypi-all-depends:
+            - six
+            - websocket-client
+    dockerpty:
+        version: 0.4.1
+    backports.ssl-match-hostname:
+        version: 3.7.0.1
