@@ -1,0 +1,43 @@
+pathes:
+    csdb-path:              cf/csdb
+
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master
+
+targets:
+    - dng-ascii-i386
+
+packages:
+
+    flatbuffers@1.10.0:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    flatbuffers@master:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    libdvdread@6.0.0:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
+    libdvdnav@6.0.0:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+        depends:
+            - libdvdread@6.0.0
+
+    kodi:
+        my-url:             git@github.com:oss-qm/${package.name}.git
+        my-branch:          debian/maint-${package.version}
+        autobuild-branch:   my/debian/maint-${package.version}
+        depends:
+            - flatbuffers@1.10.0
+            - libdvdnav@6.0.0
+            - libdvdread@6.0.0
+
+pools:
+
+    kodi:
+        packages:
+            - flatbuffers@master
+            - flatbuffers@1.10.0
+            - libdvdnav@6.0.0
+            - kodi

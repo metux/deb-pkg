@@ -1,0 +1,4 @@
+---
+package:      kodi
+git.url:      https://github.com/xbmc/xbmc.git
+git.branch:   master

@@ -1,0 +1,4 @@
+---
+package:      kodi
+git.url:      https://salsa.debian.org/multimedia-team/kodi.git
+git.branch:   master
