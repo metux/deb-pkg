@@ -1,0 +1,82 @@
+targets:
+    - devuan/chimaera/amd64
+    - devuan/chimaera/i386
+    - devuan/daedalus/amd64
+    - devuan/daedalus/i386
+    - devuan/testing/i386
+    - devuan/testing/amd64
+    - devuan/unstable/i386
+    - devuan/unstable/amd64
+# beowulf yet needs a debhelper upgrade (>=13) for golang-defaults-1.19
+#    - devuan/beowulf/amd64
+#    - devuan/beowulf/i386
+
+defaults:
+    packages:
+        autobuild-ref:    oss-qm/debian/maint-${package.version}
+        autobuild-local:  debian/maint-${package.version}
+
+packages:
+
+### upgrade golang toolchain, if necessary
+
+    golang-defaults@1.19:
+        autobuild-ref:    debian/2%1.19_1_bpo11+1
+        skip-on-target:
+            - devuan/daedalus/amd64
+            - devuan/daedalus/i386
+            - devuan/testing/i386
+            - devuan/testing/amd64
+            - devuan/unstable/i386
+            - devuan/unstable/amd64
+
+    golang-defaults@1.20:
+        autobuild-ref:    debian/2%1.20_2
+        depends:
+            - golang-go@1.20.7
+        skip-on-target:
+            - devuan/testing/i386
+            - devuan/testing/amd64
+            - devuan/unstable/i386
+            - devuan/unstable/amd64
+
+    golang-go@1.20.7:
+        depends:
+            golang-defaults@1.19
+        skip-on-target:
+            - devuan/testing/i386
+            - devuan/testing/amd64
+            - devuan/unstable/i386
+            - devuan/unstable/amd64
+
+### container tools
+
+    runc@master:
+        depends:
+            - golang-defaults@1.19
+
+    containerd-cgroups@master:
+        depends:
+            - golang-defaults@1.19
+
+    containerd@master:
+        depends:
+            - golang-defaults@1.20
+            - runc@master
+
+    docker-cli@master:
+        depends:
+            - golang-defaults@1.19
+
+    nerdctl@master:
+        depends:
+            - golang-defaults@1.20
+
+pools:
+    default:
+        packages:
+            - runc@master
+            - containerd-cgroups@master
+            - containerd@master
+            - nerdctl@master
+            - docker-cli@master
