@@ -1,0 +1,48 @@
+pathes:
+    csdb-path:  cf/csdb
+    dut-path:   cf/dut
+
+targets:
+    - stretch-amd64
+
+packages:
+
+    kernel.apu2:
+        autobuild-branch:    my/wip/apu2-master
+        my-url:              git@github.com:metux/linux.git
+        my-branch:           wip/apu2-master
+        upstream-url:        git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+        remotes:
+            linus:      git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+            stable:     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+            gpio:       https://kernel.googlesource.com/pub/scm/linux/kernel/git/linusw/linux-gpio
+            serial:     git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git
+            kasan:      https://github.com/google/kasan.git
+            wandboard:  https://github.com/wandboard-org/linux
+            nitrogen:   https://github.com/boundarydevices/linux-imx6
+
+    coreboot.apu2:
+        upstream-url:        https://github.com/pcengines/coreboot.git
+        upstream-tag:        v4.0.18
+
+    apu2-docs:
+        my-url:              git@github.com:metux/apu2-docs.git
+        my-branch:           master
+        autobuild-branch:    my/master
+
+pools:
+
+    apu2:
+        packages:
+            - kernel.apu2
+        upload:
+            protocol:     rsync+ssh
+            username:     aptrepo
+            hostname:     ostwind
+            path:         /var/aptrepo/apu2
+        dut: apu4
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    - git-url:      git@github.com:metux/docker-buildpackage.git
+    - git-branch:   master

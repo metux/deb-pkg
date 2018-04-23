@@ -1,0 +1,4 @@
+#!/usr/bin/python
+
+from deb_autopkg.cmd import dut_exec
+dut_exec("cf/apu2.yml", "apu4", [])

@@ -1,0 +1,18 @@
+---
+name: apu4
+
+# target architecture
+target: stretch-amd64
+
+# the testbox where this DUT is connected to
+testbox: ostwind
+
+# routed via ostwind
+ssh:
+    hostname: ostwind
+    username: root
+    port: 8023
+
+# always reboot after deployment (needed eg. for kernel)
+post-deploy:
+    reboot: true

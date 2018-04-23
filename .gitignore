@@ -3,5 +3,6 @@
 *.pyc
 .stat
 .aptrepo
+.aptrepo-*
 .zyprepo
 .cache

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+fail() {
+    notify-send "APU2 FAILED:" "$@"
+    exit 1
+}
+
+./run-build || fail "package build"
+
+notify-send "APU2 FINISHED"

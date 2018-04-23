@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+GITREPO=pkg/kernel.apu2.git
+REMOTE=my
+BASE=upstream/master
+
+cd $GITREPO || exit 1
+
+get_branches() {
+	git ls-remote $REMOTE | grep "refs/heads/submit/" | sed -e 's~.*refs/heads/~~'
+}
+
+do_rebase() {
+	local branch="$1"
+	local base="$2"
+	local lbranch="autorebase/$1"
+	echo "rebasing $branch"
+#	git branch -D "$lbranch" || true
+	git update-ref -d refs/heads/$lbranch
+	git checkout $REMOTE/$branch -b "$lbranch"
+	git rebase $base
+	git push $REMOTE "+$lbranch:refs/heads/$branch"
+	git checkout __foobar
+	git branch -D $lbranch
+	echo "DONE branch: $branch"
+}
+
+git remote update upstream
+
+git branch -D __foobar || true
+git checkout -f upstream/master -b __foobar || true
+git checkout -f __foobar
+
+for i in `get_branches` ; do
+    do_rebase "$i" $BASE
+done
