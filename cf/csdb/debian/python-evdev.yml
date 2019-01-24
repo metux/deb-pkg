@@ -1,0 +1,4 @@
+---
+package:      python-evdev
+git.url:      https://salsa.debian.org/debian/python-evdev.git
+git.branch:   master
