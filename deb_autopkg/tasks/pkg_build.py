@@ -15,13 +15,19 @@ class PkgBuildTask(Task):
     def get_subtasks(self):
         tasks = []
         for t in self.get_targets():
-            tasks.append(pkg_build_target.alloc(self.param['pkg'].get_conf(), self.param['pkg'], t))
+            tasks.append(pkg_build_target.alloc(self.param['pkg'].get_conf(),
+                                                self.param['pkg'],
+                                                t,
+                                                self.get_param('dontclone')))
         return tasks
 
-def alloc(conf, pkg, pool):
+def alloc(conf, pkg, pool, dontclone = False):
     if pool is None:
         pn = "global"
     else:
         pn = pool.name
 
-    return conf.cached_task_alloc('build-pkg:'+pn+":"+pkg.name, PkgBuildTask, { 'pkg': pkg, 'pool': pool })
+    return conf.cached_task_alloc(
+        'build-pkg:'+pn+":"+pkg.name,
+        PkgBuildTask,
+        { 'pkg': pkg, 'pool': pool, 'dontclone': dontclone })

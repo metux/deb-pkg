@@ -15,6 +15,7 @@ class CSDB:
         self.load_db('upstream')
         self.load_db('debian')
         self.load_db('oss-qm')
+        self.load_db('oss-qm-pub')
         self.load_db('ci')
 
     """load generic database of given name"""

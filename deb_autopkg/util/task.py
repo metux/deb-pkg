@@ -63,6 +63,19 @@ class Task(object):
     def log_info(self, text):
         info("("+self.name+") "+text)
 
+    def get_param(self, name, dflt = None):
+        if name in self.param:
+            return self.param[name]
+        else:
+            return dflt
+
+    def get_param_bool(self, name, dflt = False):
+        if name not in self.param:
+            return dflt
+        if self.param[name] is None:
+            return dflt
+        return self.param[name]
+
 class TaskRunner(object):
 
     def __init__(self, name):

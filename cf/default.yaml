@@ -1,0 +1,60 @@
+pathes:
+    csdb-path:              cf/csdb
+
+targets:
+    - stretch-amd64
+
+packages:
+
+    python-evdev@1.1.2:
+        autobuild-branch:    oss-qm-pub/debian/maint-${package.version}
+
+    batlink-baseconf:
+        my-url:              mygit@mtx-hq.ddns.net:/home/git/repos/customer/abo-wind/batlink-baseconf.git
+        my-branch:           master
+        autobuild-branch:    my/master
+
+    batlink-hotkey:
+        my-url:              mygit@mtx-hq.ddns.net:/home/git/repos/customer/abo-wind/batlink-misc.git
+        my-branch:           master
+        autobuild-branch:    my/hotkey/master
+        depends:
+            - python-evdev@1.1.2
+
+    batlink-web:
+        my-url:              mygit@mtx-hq.ddns.net:/home/git/repos/customer/abo-wind/batlink-web.git
+        my-branch:           master
+        autobuild-branch:    my/master
+
+    kernel.apu3:
+#        my-url:              git@github.com:metux/linux.git
+        my-url:              https://github.com/metux/linux.git
+#        my-branch:           wip/deb
+        autobuild-branch:    my/apu2/defconf-4.20.7
+        upstream-url:        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+        # just for reference, not implemented
+        remotes:
+            linus:  git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+            stable: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+
+pools:
+
+    default:
+        packages:
+            - python-evdev@1.1.2
+            - kernel.apu3
+            - batlink-baseconf
+            - batlink-hotkey
+            - batlink-web
+
+aptrepos:
+    stretch-amd64:
+        pool: default
+        target: stretch-amd64
+        dist: stretch-amd64
+        comment: my funny repo
+
+# configuration for automatically fetching the dck-buildpackage tool
+dck-buildpackage:
+    git-url:      https://github.com/metux/docker-buildpackage.git
+    git-branch:   hack

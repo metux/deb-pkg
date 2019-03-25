@@ -8,6 +8,7 @@ from pkgspec import PkgSpec
 from dutspec import DutSpec
 from metux.csdb import CSDB
 from metux.log import info, warn, err
+import aptrepospec
 
 """global configuration"""
 class Config(object):
@@ -76,12 +77,12 @@ class Config(object):
         my_url = self._cf_dckbp(
             'git-url',
             'git@github.com:metux/docker-buildpackage.git',
-            'dck-buildpackage.git-repo not defined. using default')
+            'dck-buildpackage.git-url not defined. using default')
 
         my_branch = self._cf_dckbp(
             'git-branch',
             'master',
-            "dck-buildpackage.git-repo not defined. assuming 'master'")
+            "dck-buildpackage.git-branch not defined. assuming 'master'")
 
         return PkgSpec(
             '__dckbp',
@@ -209,3 +210,6 @@ class Config(object):
             return DutSpec(name, cf, self)
 
         raise Exception("missing dut config: "+fn)
+
+    def get_apt_repos(self):
+        return aptrepospec.alloc_list(self._my_spec['aptrepos'])

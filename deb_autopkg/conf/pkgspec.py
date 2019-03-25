@@ -92,6 +92,10 @@ class PkgSpec(object):
     def get_autobuild_branch(self):
         return self.__cf_str('autobuild-branch')
 
+    """get the ci branch"""
+    def get_ci_branch(self):
+        return self.__cf_str('ci-branch')
+
     """get dependencies - package names)"""
     def get_depends_list(self):
         return self.__cf_list('depends')

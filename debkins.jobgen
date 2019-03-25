@@ -1,0 +1,10 @@
+#!/usr/bin/python
+
+#
+# helper for debkins: generate job dsl for autoseeding
+#
+
+from deb_autopkg import jenkins
+from sys import argv
+
+print (jenkins.Debkins().generate_jobs(argv[1], argv[2], argv[3]))

@@ -1,5 +1,12 @@
 from builder import Builder
+from jenkins import JobGenerator
 from conf import load
+import json
+
+opt_no_clone = False
+
+def set_no_clone():
+    opt_no_clone = True
 
 def build_pool(conffile, pool):
     return Builder(load(conffile)).build_pool(pool)
@@ -13,8 +20,8 @@ def deploy_pool(conffile, pool):
 def build_all(conffile):
     return Builder(load(conffile)).build_all()
 
-def build_package(conffile, pkg):
-    return Builder(load(conffile)).build_package(pkg)
+def build_package(conffile, pkg, dontclone = False):
+    return Builder(load(conffile)).build_package(pkg, None, { 'dontclone': dontclone })
 
 def clone_all(conffile):
     return Builder(load(conffile)).clone_all()

@@ -1,0 +1,7 @@
+#!/usr/bin/python
+
+from sys import argv
+from deb_autopkg import cmd
+from deb_autopkg.jenkins import Debkins
+
+Debkins().build_package(argv[1], argv[2])

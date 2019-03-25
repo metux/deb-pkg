@@ -18,15 +18,19 @@ class PkgBuildTargetTask(Task):
         self.pkg      = param['pkg']
         self.statfile = self.conf.get_statfile(
             "build."+self.target.get_pool_name()+"."+self.target.get_target_name()+"."+self.pkg.name)
+        self.dontclone = self.get_param_bool('dontclone', False)
 
     """[override]"""
     def get_subtasks(self):
         tasks = []
         tasks.append(dckbp_clone.alloc(self.conf))
-        tasks.append(pkg_clone.alloc(self.conf, self.pkg))
+        if self.dontclone:
+            info("PkgBuildTargetTask: not cloning")
+        else:
+            tasks.append(pkg_clone.alloc(self.conf, self.pkg))
 
         for pkg in self.pkg.get_depends_packages():
-            tasks.append(alloc(self.conf, pkg, self.target))
+            tasks.append(alloc(self.conf, pkg, self.target, self.dontclone))
 
         return tasks
 
@@ -54,5 +58,7 @@ class PkgBuildTargetTask(Task):
         self.statfile.set()
         return True
 
-def alloc(conf, pkg, target):
-    return conf.cached_task_alloc('build-pkg-target:'+target.name+':'+pkg.name, PkgBuildTargetTask, { 'pkg': pkg, 'target': target })
+def alloc(conf, pkg, target, dontclone = False):
+    return conf.cached_task_alloc('build-pkg-target:'+target.get_target_name()+':'+pkg.name,
+                                  PkgBuildTargetTask,
+                                  { 'pkg': pkg, 'target': target, 'dontclone': dontclone })

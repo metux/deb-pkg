@@ -1,0 +1,8 @@
+
+config: cf/default.yaml
+
+aptrepos:
+    stretch-amd64:
+        pool: default
+        target: stretch-amd64
+        dist: stretch-amd64
