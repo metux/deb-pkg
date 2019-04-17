@@ -1,0 +1,4 @@
+---
+package:      debootstrap
+git.url:      https://salsa.debian.org/installer-team/debootstrap.git
+git.branch:   master
