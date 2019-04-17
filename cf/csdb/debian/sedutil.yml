@@ -1,0 +1,3 @@
+---
+package:      sedutil
+git.url:      https://salsa.debian.org/janluca-guest/sedutil-debian.git
