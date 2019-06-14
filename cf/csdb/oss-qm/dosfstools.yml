@@ -1,0 +1,3 @@
+---
+package:      dosfstools
+git.url:      git@github.com:oss-qm/dosfstools.git
