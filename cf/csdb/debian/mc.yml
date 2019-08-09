@@ -1,0 +1,4 @@
+---
+package:      mc
+git.url:      git@salsa.debian.org:debian/mc.git
+git.branch:   master

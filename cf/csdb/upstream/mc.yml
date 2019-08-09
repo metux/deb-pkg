@@ -1,0 +1,4 @@
+---
+package:    mc
+git.url:    https://github.com/MidnightCommander/mc.git
+git.branch: master
