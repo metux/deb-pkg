@@ -18,8 +18,12 @@ packages:
         depends:
             - python-evdev@1.1.2
 
+    mc@master:
+        autobuild-branch:   oss-qm/debian/maint-${package.version}
+
 pools:
 
     default:
         packages:
+            - mc@master
             - ds4drv@master
