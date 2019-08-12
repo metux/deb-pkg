@@ -1,0 +1,4 @@
+---
+package:      ds4drv
+description:  Playstation 4 Controller userland driver
+git.url:      https://github.com/chrippa/ds4drv.git
