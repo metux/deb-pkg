@@ -1,0 +1,4 @@
+---
+package:      libdvdread
+git.url:      https://salsa.debian.org/multimedia-team/${package.name}.git
+git.branch:   master
