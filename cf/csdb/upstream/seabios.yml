@@ -1,0 +1,3 @@
+---
+package:      seabios
+git.url:      git://anonscm.debian.org/pkg-qemu/seabios.git
