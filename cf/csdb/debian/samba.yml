@@ -1,0 +1,4 @@
+---
+package:      samba
+git.url:      https://salsa.debian.org/samba-team/samba.git
+git.branch:   master
