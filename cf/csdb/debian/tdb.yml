@@ -1,0 +1,4 @@
+---
+package:      tdb
+git.url:      https://salsa.debian.org/samba-team/tdb.git
+git.branch:   master
