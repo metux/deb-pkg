@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+
+from deb_autopkg import cmd
+cmd.build_pool("cf/repos/devuan/games-dev.yml", "")

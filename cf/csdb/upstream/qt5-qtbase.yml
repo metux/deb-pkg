@@ -1,0 +1,3 @@
+---
+package:      qt5-qtbase
+git.url:      https://code.qt.io/qt/qt5.git

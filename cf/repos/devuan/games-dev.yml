@@ -1,0 +1,13 @@
+targets:
+    - devuan/chimaera/i386
+
+packages:
+    warzone2100:
+        autobuild-ref:  oss-qm/debian_hack
+#        depends:
+#            - qt5-qtbase
+
+pools:
+    default:
+        packages:
+            - warzone2100
