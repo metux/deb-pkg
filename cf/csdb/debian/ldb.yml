@@ -1,0 +1,4 @@
+---
+package:      ldb
+git.url:      https://salsa.debian.org/samba-team/ldb.git
+git.branch:   master
