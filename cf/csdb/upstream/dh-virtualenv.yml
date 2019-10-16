@@ -1,0 +1,3 @@
+---
+package:    dh-virtualenv
+git.url:    https://github.com/spotify/dh-virtualenv.git

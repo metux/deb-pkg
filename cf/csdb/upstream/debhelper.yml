@@ -1,0 +1,4 @@
+---
+package:    debhelper
+git.url:    https://salsa.debian.org/debian/debhelper.git
+git.branch: master
