@@ -1,0 +1,4 @@
+---
+package:    git-remote-hg
+git.url:    git@github.com:oss-qm/git-remote-hg.git
+git.branch: debian/${package.version}
