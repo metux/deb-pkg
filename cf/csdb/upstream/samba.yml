@@ -1,0 +1,4 @@
+---
+package:    samba
+git.url:    https://github.com/samba-team/samba.git
+git.branch: master
