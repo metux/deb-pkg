@@ -1,0 +1,4 @@
+---
+package:      gettext
+git.url:      https://salsa.debian.org/reproducible-builds/packages/gettext.git
+git.branch:   master
