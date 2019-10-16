@@ -1,0 +1,4 @@
+---
+package:      cmocka
+homepage:     https://cmocka.org/
+git.url:      git://git.cryptomilk.org/projects/cmocka.git

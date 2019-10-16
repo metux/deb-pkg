@@ -1,0 +1,4 @@
+---
+package:      cmocka
+git.url:      https://salsa.debian.org/debian/cmocka.git
+git.branch:   master
