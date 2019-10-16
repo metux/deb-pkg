@@ -1,0 +1,4 @@
+---
+package:    flatbuffers
+git.url:    git@github.com:oss-qm/flatbuffers.git
+git.branch: debian/maint-${package.version}
