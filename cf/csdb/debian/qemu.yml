@@ -1,0 +1,4 @@
+---
+package:      qemu
+git.url:      git://anonscm.debian.org/pkg-qemu/qemu.git
+git.branch:   debian-unstable
