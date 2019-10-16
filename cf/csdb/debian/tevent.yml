@@ -1,0 +1,4 @@
+---
+package:      tevent
+git.url:      https://salsa.debian.org/samba-team/tevent.git
+git.branch:   master
