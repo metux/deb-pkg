@@ -1,0 +1,3 @@
+---
+package:      dh-python
+git.url:      https://salsa.debian.org/python-team/tools/dh-python.git
