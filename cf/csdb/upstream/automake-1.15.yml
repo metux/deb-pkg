@@ -1,0 +1,4 @@
+---
+package:    automake
+git.url:    https://git.savannah.gnu.org/git/automake.git
+git.branch: master
