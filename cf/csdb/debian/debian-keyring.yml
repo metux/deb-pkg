@@ -1,0 +1,3 @@
+package: debian-keyring
+git.url: https://salsa.debian.org/debian-keyring/keyring.git
+git.branch: master
