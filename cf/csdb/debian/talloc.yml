@@ -1,0 +1,4 @@
+---
+package:      tdb
+git.url:      https://salsa.debian.org/samba-team/talloc.git
+git.branch:   master
