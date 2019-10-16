@@ -1,0 +1,4 @@
+---
+package:    qemu
+git.url:    git@github.com:oss-qm/qemu.git
+git.branch: deb-v${package.version}
