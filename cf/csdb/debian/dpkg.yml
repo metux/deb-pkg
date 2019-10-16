@@ -1,0 +1,6 @@
+---
+package:      dpkg
+git.url:      https://salsa.debian.org/dpkg-team/dpkg.git
+git.branch:   master
+version-tags:
+  - 1.19.0
