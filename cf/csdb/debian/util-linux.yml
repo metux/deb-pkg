@@ -1,0 +1,5 @@
+---
+package:        util-linux
+git.url:        git@salsa.debian.org:debian/util-linux.git
+version-tags:
+  - debian/2.29.2-1+deb9u1
