@@ -1,0 +1,3 @@
+---
+package:      libvirt
+git.url:      https://salsa.debian.org/libvirt-team/libvirt.git
