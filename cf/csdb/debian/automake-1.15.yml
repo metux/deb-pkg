@@ -1,0 +1,4 @@
+---
+package:      automake
+git.url:      git://anonscm.debian.org/users/eric/automake-1.15.git
+git.branch:   debian/1.15.1-3
