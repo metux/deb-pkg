@@ -15,8 +15,9 @@ class GitCloneTask(Task):
         for remote in spec['remotes']:
             repo.set_remote(remote, spec['remotes'][remote]['url'])
 
-        if 'pypi' in spec:
-            ret = debian.create_package(spec['pypi'], repo)
+        pypi = spec.get('pypi', None)
+        if pypi is not None:
+            ret = debian.create_package(pypi, repo)
 
         if not repo.is_checked_out():
             if (not 'init-ref' in spec) or (spec['init-ref'] is None):

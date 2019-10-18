@@ -114,4 +114,4 @@ class PkgSpec(object):
 
     """get pypi import configuration"""
     def get_pypi_import_conf(self):
-        return self._my_pypi
+        return getattr(self, '_my_pypi', None)
