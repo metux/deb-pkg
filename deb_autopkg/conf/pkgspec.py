@@ -62,8 +62,8 @@ class PkgSpec(object):
         v = v.replace('${package.name}', self.package_name)
         return v
 
-    """[private]"""
-    def __cf_str(self, name):
+    """fetch a string property and do variable substitution"""
+    def get_property_str(self, name):
         if name in self._my_spec:
             return self._substvar(self._my_spec[name])
         else:
@@ -86,11 +86,11 @@ class PkgSpec(object):
 
     """get url of remote repo <name>"""
     def git_remote_url(self, name):
-        return self.__cf_str(name+'-url')
+        return self.get_property_str(name+'-url')
 
     """get the default branch"""
     def get_autobuild_branch(self):
-        return self.__cf_str('autobuild-branch')
+        return self.get_property_str('autobuild-branch')
 
     """get dependencies - package names)"""
     def get_depends_list(self):
