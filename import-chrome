@@ -1,0 +1,9 @@
+#!/usr/bin/python
+
+from deb_autopkg import cmd
+from deb_autopkg.conf import load
+from pprint import pprint
+
+config = load("cf/devuan-ascii.yml")
+pkg = config.get_package('chromium')
+pprint(pkg)

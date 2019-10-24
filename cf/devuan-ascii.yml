@@ -14,6 +14,10 @@ packages:
     mc:
         autobuild-branch:   oss-qm/wip/mtx
 
+    chromium:
+        tarball-upstream: http://security.debian.org/debian-security/pool/updates/main/c/chromium/chromium_73.0.3683.75.orig.tar.xz
+        tarball-deb:      http://security.debian.org/debian-security/pool/updates/main/c/chromium/chromium_73.0.3683.75-1~deb9u1.debian.tar.xz
+
 pools:
 
     default:
