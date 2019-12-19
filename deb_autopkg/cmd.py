@@ -24,3 +24,7 @@ def get_dut(conffile, name):
 
 def dut_exec(conffile, dutname, cmd = []):
     return get_dut(conffile, dutname).dut_exec(cmd)
+
+def pool_invalidate_target_package(conffile, poolname, pkgname, targetname):
+    get_builder(conffile).conf.get_pool(poolname).invalidate_target_package(pkgname, targetname)
+    return True
