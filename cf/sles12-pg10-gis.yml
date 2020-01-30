@@ -1,0 +1,74 @@
+pathes:
+    remote-names:
+        - upstream
+        - oss-qm
+
+csdb:
+    path: ${GLOBAL::config.prefix}/csdb
+    sections:
+        - upstream
+        - oss-qm
+
+targets:
+    - sles12-x86_64
+
+defaults:
+    packages:
+        autobuild-ref:      oss-qm/sles12/maint-${package.version}
+        autobuild-local:    sles12/maint-${package.version}
+#        autobuild-force:    yes
+
+packages:
+
+    postgres@10.13:
+
+    postgis@2.5.3:
+        rpm-define:
+            enable_sfcgal:   1
+            enable_gui:      0
+            postgres_major:  10
+        depends:
+            - sfcgal@1.3.7
+            - postgres@10.13
+
+    cgal@4.7:
+
+    sfcgal@1.3.7:
+        depends:
+            - cgal@4.7
+            - gdal@3.0.3
+
+    bison@3.0.4:
+
+    libdap@3.20.4:
+        depends:
+            - bison@3.0.4
+
+    gdal@3.0.3:
+        depends:
+            - libdap@3.20.4
+            - libgeotiff@1.6.0
+            - geos@3.8.0
+            - proj@6.2.1
+
+    libgeotiff@1.6.0:
+        depends:
+            - proj@6.2.1
+
+    proj@6.2.1:
+
+    geos@3.8.0:
+
+    repmgr@5.1.0:
+        rpm-define:
+            postgres_major: 10
+        depends:
+            - postgres@10.13
+
+pools:
+
+    pg10-gis:
+        packages:
+          - postgres@10.13
+          - repmgr@5.1.0
+          - postgis@2.5.3

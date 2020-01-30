@@ -1,0 +1,29 @@
+pathes:
+    remote-names:
+        - upstream
+        - oss-qm
+
+csdb:
+    path: ${GLOBAL::config.prefix}/csdb
+    sections:
+        - upstream
+        - oss-qm
+
+targets:
+    - sles12-x86_64
+
+defaults:
+    packages:
+        autobuild-ref:      oss-qm/sles12/maint-${package.version}
+        autobuild-local:    sles12/maint-${package.version}
+#        autobuild-force:    yes
+
+packages:
+
+    pgbouncer@1.14.0:
+
+pools:
+
+    pgbouncer:
+        packages:
+          - pgbouncer@1.14.0

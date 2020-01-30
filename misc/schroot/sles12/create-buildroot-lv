@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# create a template LV from tarball
+#
+
+set -e
+
+. config.sh
+
+MOUNTPOINT="/mnt/${BUILDROOT_VG_NAME}/${BUILDROOT_LV_NAME}"
+DEVICE="/dev/${BUILDROOT_VG_NAME}/${BUILDROOT_LV_NAME}"
+
+mkdir -p "$MOUNTPOINT"
+
+umount -f "$MOUNTPOINT" || true
+
+if [ -e "$DEVICE" ]; then
+    echo "=== Removing old device $DEVICE"
+    lvremove -y "$DEVICE"
+fi
+
+echo "=== Creating new LV ${BUILDROOT_LV_NAME}"
+lvcreate -y "${BUILDROOT_VG_NAME}" --name "${BUILDROOT_LV_NAME}" -L "${BUILDROOT_LV_SIZE}"
+
+echo "=== creating filesystem on LV ${BUILDROOT_LV_NAME}"
+mkfs.ext4 "$DEVICE"
+mount "$DEVICE" "$MOUNTPOINT"
+
+echo "=== unpacking tarball on LV ${BUILDROOT_LV_NAME}"
+cat "${BUILDROOT_TARBALL}" | ( cd $MOUNTPOINT && tar -xj )
+
+umount "$MOUNTPOINT"
+
+echo "OKAY"

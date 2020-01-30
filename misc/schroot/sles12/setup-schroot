@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# configure schroot - needs to be run as root
+#
+
+set -e
+
+. config.sh
+
+PWD=`pwd`
+TARBALL_FILE="$PWD/$BUILDROOT_TARBALL"
+
+mkdir -p tmp
+
+(
+    echo "[${BUILDROOT_CHROOT_NAME}.lvm]"
+    echo "type=lvm-snapshot"
+    echo "description=automatic builder ${BUILDROOT_CHROOT_NAME} (LVM snapshot)"
+    echo "groups=sbuild,root"
+    echo "root-users=nekrad,mtx"
+    echo "root-groups=root,sbuild"
+    echo "source-root-users=nekrad,mtx"
+    echo "device=/dev/${BUILDROOT_VG_NAME}/${BUILDROOT_LV_NAME}"
+    echo "mount-options=-o atime,sync,user_xattr"
+    echo "lvm-snapshot-options=--size ${BUILDROOT_SNAP_SIZE}"
+    echo ""
+    echo "[${BUILDROOT_CHROOT_NAME}.tar]"
+    echo "type=file"
+    echo "description=automatic builder ${BUILDROOT_CHROOT_NAME} (tarball)"
+    echo "groups=sbuild,root"
+    echo "root-users=nekrad,mtx"
+    echo "root-groups=root,sbuild"
+    echo "source-root-users=nekrad,mtx"
+    echo "file=$TARBALL_FILE"
+) > tmp/${BUILDROOT_CHROOT_NAME}.conf
+
+sudo mkdir -p /etc/schroot/schroot.d
+sudo cp tmp/${BUILDROOT_CHROOT_NAME}.conf /etc/schroot/chroot.d/

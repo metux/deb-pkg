@@ -1,0 +1,56 @@
+#!/bin/bash
+
+PACKAGE="pgbouncer"
+VERSION="1.14.0"
+UPSTREAM_REF="pgbouncer_1_14_0"
+SUBMODULE_NAME="lib"
+
+TMP_ID=$(mktemp -u XXXXXXXX)
+TMP_BRANCH="tmp-$TMP_ID"
+TARGET_BRANCH="automerged-$VERSION"
+
+set -e
+set -u
+
+cd "pkg/$PACKAGE@$VERSION.git"
+
+export GIT_AUTHOR_NAME="OSS-QM autoimport robot"
+export GIT_AUTHOR_EMAIL="none@none.org"
+#export GIT_AUTHOR_DATE="1970-01-01 00:00:00"
+export GIT_AUTHOR_DATE="1980-01-01 00:00:00"
+export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
+
+prepare() {
+    git checkout -f "$UPSTREAM_REF" -b "$TMP_BRANCH"
+    git clean -f -d -X
+    git reset
+    git checkout .
+    git submodule init
+    git submodule update
+    git clean -f -d -X
+}
+
+merge_submodules() {
+    local submodule=''
+    local ref=''
+    for submodule in $* ; do
+        ref=`git submodule status | grep " $submodule" | sed -e 's~^ *~~; s~ .*~~'`
+        ( cd .git/modules/$submodule && git remote update )
+        git fetch .git/modules/$submodule $ref
+
+        git rm -r -f "$submodule"
+        git commit --date="1980-01-01 00:00:00" -m "(auto-import) remove lib/ submodule"
+
+        echo "calling subtree add"
+        git subtree add --prefix="$submodule" ".git/modules/$submodule" "$ref"
+    done
+}
+
+prepare
+merge_submodules lib
+
+git update-ref -d "refs/heads/$TARGET_BRANCH"
+git branch -m "$TARGET_BRANCH"
+git push oss-qm $TARGET_BRANCH
