@@ -24,6 +24,7 @@ class PkgSpec(SpecObject):
             self.default_addlist({
                 dbname+'-url':    self._my_db[dbname].git_url,
                 dbname+'-branch': self._my_db[dbname].git_branch,
+                dbname+'-depth',  self._my_db[dbname].git_depth,
             })
 
     """[private]"""
@@ -70,6 +71,10 @@ class PkgSpec(SpecObject):
     def git_remote_url(self, name):
         return self.get_cf(name+'-url')
 
+    """get clone depth"""
+    def git_depth(self, name):
+        return self.get_cf(name+'-depth')
+
     """get dependencies - package names)"""
     def get_depends_list(self):
         return self.get_cf_list('depends')
@@ -83,6 +88,7 @@ class PkgSpec(SpecObject):
         remotes = {}
         for r in self.conf.get_remote_names():
             u = self.git_remote_url(r)
+            d = self.git_depth(r)
             if u is not None:
                 remotes[r] = { 'url': u }
         return {

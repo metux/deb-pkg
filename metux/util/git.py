@@ -15,6 +15,16 @@ except ImportError:
 
 _devnull = open(devnull, 'w')
 
+
+def is_int(val):
+    if val is not None:
+        if type(val) == int:
+            return True
+        if val.is_integer():
+            return True
+
+    return False
+
 class GitRepo(object):
 
     def __init__(self, path):
@@ -63,12 +73,15 @@ class GitRepo(object):
             return False
         return self._gitcall(['init', self.path])
 
-    def set_remote(self, name, url):
+    def set_remote(self, name, url, depth = None):
         # need to do that complicated to defeat shortcut evaluation
         a = self.set_config('remote.'+name+'.url', url)
         b = self.set_config('remote.'+name+'.fetch', '+refs/heads/*:refs/remotes/'+name+'/*')
         if (a or b):
-            return self._gitcall(['remote', 'update', name])
+            if depth is not None:
+                return self._gitcall(['fetch', name, '--depth', depth])
+            else:
+                return self._gitcall(['remote', 'update', name])
 
     def get_symbolic_ref(self, name):
         return self._gitout(["symbolic-ref", name])

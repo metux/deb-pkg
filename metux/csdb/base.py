@@ -10,6 +10,7 @@ class BaseSpec:
         self._my_spec = spec
         self.git_url = self.__get_spec('git.url')
         self.git_branch = self.__get_spec('git.branch')
+        self.git_depth = self.__get_spec('git.depth')
 
     def __type(self):
         return "Base"
