@@ -1,0 +1,15 @@
+
+scripts for creating SLES12 schroot images
+
+* bootstrap-buildroot:
+    * bootstraps a chroot image for SLES12
+    * needs to be run as root on an SLES12 system
+    * produces a tarball: sles12-buildroot.tar.bz2
+
+* create-buildroot-lv:
+    * creates a buildroot template LV from tarball
+    * needs to be run as root
+    * tarball needs to exist: sles12-buildroot.tar.bz2
+
+* setup-schroot
+    * install schroot config for the builder chroot

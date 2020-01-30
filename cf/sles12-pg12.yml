@@ -1,0 +1,36 @@
+pathes:
+    remote-names:
+        - upstream
+        - oss-qm
+
+csdb:
+    path: ${GLOBAL::config.prefix}/csdb
+    sections:
+        - upstream
+        - oss-qm
+
+targets:
+    - sles12-x86_64
+
+defaults:
+    packages:
+        autobuild-ref:      oss-qm/sles12/maint-${package.version}
+        autobuild-local:    sles12/maint-${package.version}
+#        autobuild-force:    yes
+
+packages:
+
+    postgres@12.3:
+
+    repmgr@5.1.0:
+        rpm-define:
+            postgres_major: 12
+        depends:
+            - postgres@12.3
+
+pools:
+
+    pg12:
+        packages:
+          - postgres@12.3
+          - repmgr@5.1.0

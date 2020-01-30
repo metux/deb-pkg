@@ -1,0 +1,80 @@
+pathes:
+    remote-names:
+        - upstream
+        - oss-qm
+
+csdb:
+    path: ${GLOBAL::config.prefix}/csdb
+    sections:
+        - upstream
+        - oss-qm
+
+targets:
+    - sles12-x86_64
+
+defaults:
+    packages:
+        autobuild-ref:      oss-qm/sles12/maint-${package.version}
+        autobuild-local:    sles12/maint-${package.version}
+
+packages:
+
+    postgres@12.2:
+        rpm-name:           postgresql12
+
+    postgis@3.0.1:
+        depends:
+            - sfcgal@1.3.7
+            - postgres@12.2
+
+    cgal@4.7:
+
+    sfcgal@1.3.7:
+        depends:
+            - cgal@4.7
+            - gdal@3.0.3
+
+    bison@3.0.4:
+
+    libdap@3.20.4:
+        depends:
+            - bison@3.0.4
+
+    gdal@3.0.3:
+        depends:
+            - libdap@3.20.4
+            - libgeotiff@1.6.0
+            - geos@3.8.0
+
+    libgeotiff@1.6.0:
+        depends:
+            - proj@6.2.1
+
+    proj@6.2.1:
+        rpm-name: libproj
+
+    geos@3.8.0:
+
+    repmgr@5.1.0:
+        rpm-name: postgresql12-repmgr
+        depends:
+            - postgres@12.2
+
+    timescaledb@1.6.0:
+        depends:
+            - postgres@12.2
+
+    pg_prometheus@0.2.2:
+        rpm-name: pg_prometheus-12
+        depends:
+            - postgres@12.2
+
+pools:
+
+    pg12:
+        packages:
+          - postgres@12.2
+          - repmgr@5.1.0
+          - postgis@3.0.1
+          - pg_prometheus@0.2.2
+#          - timescaledb@1.6.0

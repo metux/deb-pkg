@@ -1,0 +1,8 @@
+[pg12]
+name=Locally built PostgreSQL 12
+enabled=1
+autorefresh=1
+baseurl=file:///var/lib/zyprepo/pg12
+type=rpm-md
+gpgcheck=0
+keeppackages=0

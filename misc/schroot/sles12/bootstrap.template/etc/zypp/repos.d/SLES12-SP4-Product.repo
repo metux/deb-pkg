@@ -1,0 +1,7 @@
+[SLES12-SP4-Product]
+name=SLES12-SP4-Product
+enabled=1
+autorefresh=1
+baseurl=nfs://svslespatch01/srv/www/htdocs/repo/SUSE/Products/SLE-SERVER/12-SP4/x86_64/product/
+type=rpm-md
+keeppackages=0

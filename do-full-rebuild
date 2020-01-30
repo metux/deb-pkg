@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -Rf .zyprepo .aptrepo .stat pkg
+
+./clone.sles12 && ./build.sles12-devel && ./build.sles12-pg12

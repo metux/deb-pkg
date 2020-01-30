@@ -1,0 +1,8 @@
+[local0]
+name=Locally built
+enabled=1
+autorefresh=1
+baseurl=file:///usr/src/packages/repo
+type=rpm-md
+gpgcheck=0
+keeppackages=0
