@@ -11,7 +11,12 @@ class GitCloneTask(Task):
         repo.initialize()
 
         for remote in spec['remotes']:
-            repo.set_remote(remote, spec['remotes'][remote]['url'])
+            r = spec['remotes'][remote]
+            if 'depth' in r:
+                d = r['depth']
+            else:
+                d = None
+            repo.set_remote(remote, r['url'], d)
 
         if not repo.is_checked_out():
             if (not 'init-ref' in spec) or (spec['init-ref'] is None):

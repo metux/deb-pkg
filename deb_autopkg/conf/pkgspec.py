@@ -19,6 +19,7 @@ class PkgSpec(SpecObject):
         if self._my_db[dbname] is not None:
             self.set_cf_missing(dbname+'-url',    self._my_db[dbname].git_url)
             self.set_cf_missing(dbname+'-branch', self._my_db[dbname].git_branch)
+            self.set_cf_missing(dbname+'-depth',  self._my_db[dbname].git_depth)
 
     """[private]"""
     def __init__(self, name, spec, conf):
@@ -64,6 +65,10 @@ class PkgSpec(SpecObject):
     def git_remote_url(self, name):
         return self.get_cf_subst(name+'-url')
 
+    """get clone depth"""
+    def git_depth(self, name):
+        return self.get_cf(name+'-depth')
+
     """get the default branch"""
     def get_autobuild_branch(self):
         return self.get_cf_subst('autobuild-branch')
@@ -81,6 +86,7 @@ class PkgSpec(SpecObject):
         remotes = {}
         for r in self.conf.get_remote_names():
             u = self.git_remote_url(r)
+            d = self.git_depth(r)
             if u is not None:
                 remotes[r] = { 'url': u }
         return {
