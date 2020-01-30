@@ -1,0 +1,7 @@
+[SLES12-SP4-Updates]
+name=SLES12-SP4-Updates
+enabled=1
+autorefresh=1
+baseurl=nfs://svslespatch01/srv/www/htdocs/repo/SUSE/Updates/SLE-SERVER/12-SP4/x86_64/update/
+type=rpm-md
+keeppackages=0

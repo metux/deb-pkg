@@ -1,0 +1,7 @@
+[SLES12-SP4-SDK-DVD1]
+name=SLES12-SP4-SDK-DVD1
+enabled=1
+autorefresh=1
+baseurl=nfs://svslespatch01/repository/ISO/SLE-12-SP4/SLE-12-SP4-SDK-DVD-x86_64-GM-DVD1/
+type=yast2
+keeppackages=0

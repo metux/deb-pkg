@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# run an zypper update of the source image
+#
+
+set -e
+
+. config.sh
+
+schroot -u root -c ${BUILDROOT_CHROOT_SRC} -- zypper --non-interactive update

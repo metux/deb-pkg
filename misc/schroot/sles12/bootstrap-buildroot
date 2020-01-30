@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# bootstrap an chroot image via zypper and create a tarball
+#
+
+ZYPPER_ROOT="/tmp/create-sles-schroot"
+TEMPLATE_DIR="bootstrap.template"
+
+set -e
+
+. config.sh
+
+ZYP() {
+    zypper --non-interactive --root "${ZYPPER_ROOT}" "$@"
+}
+
+umount ${ZYPPER_ROOT}/proc || true
+
+rm -Rf "${ZYPPER_ROOT}"
+mkdir -p "${ZYPPER_ROOT}"
+cp -r ${TEMPLATE_DIR}/* ${ZYPPER_ROOT}
+
+mkdir -p ${ZYPPER_ROOT}/proc
+mount none ${ZYPPER_ROOT}/proc -t proc
+
+ZYP --gpg-auto-import-keys refresh
+ZYP update
+ZYP install zlib libreadline6 libbz2-1 libpcre1 grep util-linux bash zypper rpmbuild createrepo nfs-client nfsidmap
+
+umount ${ZYPPER_ROOT}/proc
+
+tar -cjf "${BUILDROOT_TARBALL}" -C "${ZYPPER_ROOT}" .
+chown -R root:root "${BUILDROOT_TARBALL}"
+
+rm -Rf "${ZYPPER_ROOT}"

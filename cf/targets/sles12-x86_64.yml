@@ -1,0 +1,11 @@
+---
+packager:   zypper
+container:  schroot
+arch:       x86_64
+zypper:
+    docker:
+        image:  metux/sles12.5-devel
+    schroot:
+        image:  sles12-buildroot.tar
+        script: ${GLOBAL::config.prefix}/scripts/zypper/build-src-rpm
+        cache:  ${GLOBAL::config.basedir}/.cache/sles12

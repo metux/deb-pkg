@@ -1,0 +1,9 @@
+[pgdg-12-srpm]
+name=PostgreSQL 12 SLES 12.4 - $basearch
+enabled=1
+autorefresh=0
+baseurl=https://download.postgresql.org/pub/repos/zypp/srpms/12/suse/sles-12-x86_64/
+type=rpm-md
+gpgcheck=1
+gpgkey=https://download.postgresql.org/pub/repos/zypp//12/suse/sles-12.4-$basearch/repodata/repomd.xml
+keeppackages=0

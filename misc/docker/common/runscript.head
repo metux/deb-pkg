@@ -1,0 +1,124 @@
+#!/bin/bash
+
+[ "$DOCKER" ] || DOCKER=docker
+
+die() {
+    echo "$0: $*" >&2
+    exit 1
+}
+
+log() {
+    echo "$0: $*" >&2
+}
+
+setup_local() {
+    echo -n
+}
+
+docker_args() {
+    while [ "$1" ]; do
+        DOCKER_ARGS+=( "$1" )
+        shift
+    done
+}
+
+docker_add_env() {
+    docker_args -e "$1=$2"
+}
+
+docker_tmpfs() {
+    docker_args --tmpfs "$1"
+}
+
+docker_mount_map() {
+    docker_args --mount type=bind,source=$1,target=$1
+}
+
+docker_mount_map_ro() {
+    docker_args -v "$1:$1:ro"
+}
+
+docker_device() {
+    docker_args --device="$1"
+}
+
+setup_x11_args() {
+    if [ "$CONTAINER_X11" == "yes" ]; then
+        docker_mount_map /tmp/.X11-unix
+        docker_add_env DISPLAY "$DISPLAY"
+    fi
+
+    if [ "$CONTAINER_DRI" == "yes" ]; then
+        docker_device /dev/dri
+        docker_args --group-add video
+    fi
+}
+
+setup_audio_args() {
+    if [ "$CONTAINER_AUDIO" == "yes" ]; then
+        docker_device /dev/snd
+        docker_args --group-add audio
+    fi
+}
+
+setup_passwd_args() {
+    if [ ! "$CONTAINER_NO_PASSWD" ]; then
+        docker_mount_map_ro /etc/passwd
+        docker_mount_map_ro /etc/shadow
+        docker_mount_map_ro /etc/group
+    fi
+    docker_mount_map_ro /etc/localtime
+}
+
+setup_locales() {
+    docker_add_env LANG     "$LANG"
+    docker_add_env LC_ALL   "$LC_ALL"
+    docker_add_env LC_CTYPE "$LC_CTYPE"
+}
+
+setup_cwd() {
+    local CWD=`pwd`
+    docker_add_env CWD "$CWD"
+}
+
+setup_user() {
+    local USER=`whoami`
+    local GID=`id -g`
+
+    if [ "$CONTAINER_RESTRICT_HOMEDIR" ]; then
+        for d in "${CONTAINER_RESTRICT_HOMEDIR[@]}" ; do
+            log "mounting home subdir: $d"
+            mkdir -p "$HOME/$d"
+            docker_mount_map "$HOME/$d"
+        done
+    else
+        log "mounting full home dir"
+        docker_mount_map "$HOME"
+    fi
+
+    docker_add_env HOME "$HOME"
+
+    if [ ! "$CONTAINER_NO_UID" ]; then
+        docker_args -u "$UID:$GID"
+        docker_add_env LOGNAME "$USER"
+        docker_add_env USER    "$USER"
+    fi
+}
+
+setup_docker() {
+    [ "$DOCKER_PRIVILEGED" ] && docker_args --privileged
+    setup_passwd_args
+    setup_user
+    setup_cwd
+    setup_locales
+    setup_x11_args
+    setup_audio_args
+    setup_local
+}
+
+run_oneshot() {
+    [ "$CONTAINER_IMAGE" ] || die "image name undefined"
+
+    setup_docker
+    $DOCKER run --rm "${DOCKER_ARGS[@]}" $CONTAINER_IMAGE "$@"
+}

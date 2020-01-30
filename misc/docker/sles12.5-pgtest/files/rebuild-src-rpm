@@ -1,0 +1,33 @@
+#!/bin/bash
+
+ZYPREPO=/usr/src/packages/repo
+
+set -e
+
+SRPM_NAME="$1"
+SPEC_NAME="$2"
+
+if [ ! "$SRPM_NAME" ]; then
+    echo "$0 <package-name> <spec-name>"
+    exit 1
+fi
+
+if [ ! "$SPEC_NAME" ]; then
+    SPEC_NAME="$SRPM_NAME"
+fi
+
+zypper mr -kt
+
+echo "==== Building $SRPM_NAME ===="
+createrepo ${ZYPREPO}
+zypper --non-interactive si $SRPM_NAME
+( cd /usr/src/packages/SPECS && rpmbuild -ba $SPEC_NAME.spec )
+
+mkdir -p ${ZYPREPO}/x86_64 $ZYPREPO/srpm
+
+cp /usr/src/packages/RPMS/x86_64/*.rpm ${ZYPREPO}/x86_64 || true
+cp /usr/src/packages/SRPMS/*.src.rpm   ${ZYPREPO}/srpm || true
+
+createrepo ${ZYPREPO}
+
+echo "==== Finished $SRPM_NAME ===="
