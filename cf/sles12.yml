@@ -16,6 +16,7 @@ defaults:
     packages:
         autobuild-ref:      oss-qm/sles12/maint-${package.version}
         autobuild-local:    sles12/maint-${package.version}
+#        autobuild-force:    yes
 
 packages:
 

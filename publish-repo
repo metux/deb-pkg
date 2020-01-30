@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+#POOLS="devel pg12 pgbouncer pg10-nis"
+POOLS="pg10-gis pg12"
+
+#for p in $POOLS ; do
+#    ./build.sles12-$p
+#done
+
+sudo mkdir -p /var/zyprepos
+for p in $POOLS ; do
+    sudo rm -Rf /var/zyprepos/sles12-$p
+    sudo mkdir -p /var/zyprepos/sles12-$p
+    sudo cp -R .zyprepo/$p/* /var/zyprepos/sles12-$p/
+    sudo createrepo /var/zyprepos/sles12-$p
+done
