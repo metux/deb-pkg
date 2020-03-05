@@ -7,6 +7,7 @@ pool   = "apu2"
 target = "stretch-amd64"
 kpkg   = "kernel.apu2"
 
+## FIXME: should not use multiple cmd.* calls - in future they'll call sys.exit()"
 cmd.pool_invalidate_target_package(conf, pool, kpkg, target)
 cmd.build_pool(conf, pool)
 cmd.upload_pool(conf, pool)
