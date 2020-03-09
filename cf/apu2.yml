@@ -41,8 +41,3 @@ pools:
             hostname:     ostwind
             path:         /var/aptrepo/apu2
         dut: apu4
-
-# configuration for automatically fetching the dck-buildpackage tool
-dck-buildpackage:
-    - git-url:      git@github.com:metux/docker-buildpackage.git
-    - git-branch:   master
