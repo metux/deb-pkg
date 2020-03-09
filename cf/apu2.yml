@@ -2,6 +2,9 @@ pathes:
     csdb-path:  cf/csdb
     dut-path:   cf/dut
 
+csdb:
+    path: ${GLOBAL::config.prefix}/csdb
+
 targets:
     - stretch-amd64
 
