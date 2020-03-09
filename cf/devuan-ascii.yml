@@ -60,17 +60,17 @@ pools:
 #            - neomutt@20191207
 #            - golang-github-pkg-errors@0.8.1
 #            - libvirt@5.6.0
-#            - golang@1.10
-#            - enigmail@2.3.1
-#            - thunar@1.6.11
+            - golang@1.10
+            - enigmail@2.3.1
+            - thunar@1.6.11
             - lxc@3.2.1
             - lxcfs@3.0.4
 #            - libmixp
-#            - mc
+            - mc
             - wizardry7
             - schroot@1.7.999
 
 # configuration for automatically fetching the dck-buildpackage tool
-dck-buildpackage:
-    - git-url:      git@github.com:metux/docker-buildpackage.git
-    - git-branch:   master
+#dck-buildpackage:
+#    - git-url:      git@github.com:metux/docker-buildpackage.git
+#    - git-branch:   master
