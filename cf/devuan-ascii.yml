@@ -52,23 +52,28 @@ packages:
 
     schroot@1.7.999:
 
+    telegram-purple@1.4.3:
+        autobuild-ref:      refs/remotes/upstream/master
+        init-submodules:    true
+
 pools:
 
     default:
         packages:
-            - docker-enter@0.1
+            - telegram-purple@1.4.3
+#            - docker-enter@0.1
 #            - neomutt@20191207
 #            - golang-github-pkg-errors@0.8.1
 #            - libvirt@5.6.0
-            - golang@1.10
-            - enigmail@2.3.1
-            - thunar@1.6.11
-            - lxc@3.2.1
-            - lxcfs@3.0.4
+#            - golang@1.10
+#            - enigmail@2.3.1
+#            - thunar@1.6.11
+#            - lxc@3.2.1
+#            - lxcfs@3.0.4
 #            - libmixp
-            - mc
-            - wizardry7
-            - schroot@1.7.999
+#            - mc
+#            - wizardry7
+#            - schroot@1.7.999
 
 # configuration for automatically fetching the dck-buildpackage tool
 #dck-buildpackage:
