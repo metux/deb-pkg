@@ -66,6 +66,11 @@ class PkgBuildZypperTask(Task):
         # clean the rpmbuild temp dir
         rmtree(self.pkg['zypper.rpm.tmpdir'])
 
+        # clean recreate the srpm dir
+        zyprepo_src = abspath(self.target['target.zyprepo']+'/srpm')
+        rmtree(zyprepo_src)
+        mkdir(zyprepo_src)
+
         # copy the spec file
         specdir = self.pkg['zypper.rpm.tmpdir.specs']
         mkdir(specdir)
@@ -82,8 +87,6 @@ class PkgBuildZypperTask(Task):
             self.fail("zypper build failed: rpmbuild call failed")
 
         # copy the source rpm
-        zyprepo_src = abspath(self.target['target.zyprepo']+'/srpm')
-        mkdir(zyprepo_src)
         for s in glob(self.pkg['zypper.rpm.tmpdir']+'/SRPMS/*.src.rpm'):
             shutil.copy(s, zyprepo_src)
 
