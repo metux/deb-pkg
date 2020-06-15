@@ -17,6 +17,14 @@ CACHE_DIR="$4"
 CACHE_ZYP="$CACHE_DIR/zypp"
 TARGET="$5"
 
+shift
+shift
+shift
+shift
+shift
+
+RPMBUILD_ARGS="$@"
+
 MP_ZYPCACHE="/var/cache/zypp"
 MP_BUILDTMP="/usr/src/packages/BUILDROOT"
 
@@ -89,15 +97,16 @@ install_srpm() {
 
 run_build() {
     info "running rpmbuild"
-    rpmbuild --target "${TARGET}" -ba "/usr/src/packages/SPECS/${PACKAGE}.spec"
+    rpmbuild --target "${TARGET}" -ba "/usr/src/packages/SPECS/${PACKAGE}.spec" "$@"
 }
 
 banner() {
-    debug "Zypper build: PACKAGE:    ${PACKAGE}"
-    debug "              REPO_PATH:  ${REPO_PATH}"
-    debug "              REPO_OWNER: ${REPO_OWNER}"
-    debug "              CACHE_DIR:  ${CACHE_DIR}"
-    debug "              CACHE_ZYP:  ${CACHE_ZYP}"
+    debug "Zypper build: PACKAGE:       ${PACKAGE}"
+    debug "              REPO_PATH:     ${REPO_PATH}"
+    debug "              REPO_OWNER:    ${REPO_OWNER}"
+    debug "              CACHE_DIR:     ${CACHE_DIR}"
+    debug "              CACHE_ZYP:     ${CACHE_ZYP}"
+    debug "              RPMBUILD_ARGS: ${RPMBUILD_ARGS}"
 }
 
 ulimit -n 512
@@ -108,6 +117,6 @@ prepare
 update_repo
 add_repo
 install_srpm
-run_build
+run_build "$@"
 copy_packages
 cleanup

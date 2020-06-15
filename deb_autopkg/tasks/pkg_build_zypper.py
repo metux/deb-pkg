@@ -62,6 +62,15 @@ class PkgBuildZypperTask(Task):
                         return args[idx+1]+"/"
         return self.pkg['zypper.tarball.defprefix']
 
+    def get_defines(self):
+        defines = self.pkg['rpm-define']
+        rpmbuild_args = []
+        if defines is not None:
+            for dname in defines.keys():
+                rpmbuild_args.append("-D")
+                rpmbuild_args.append(dname+" "+str(self.pkg['rpm-define::'+dname]))
+        return rpmbuild_args
+
     def do_run(self):
 
         # clean the rpmbuild temp dir
@@ -84,7 +93,17 @@ class PkgBuildZypperTask(Task):
             self.fail("zypper failed: git-archive call failed")
 
         # create source rpm
-        if (call(["rpmbuild", "--target", self.target['arch'], "-bs", self.pkg['zypper.specfile']])):
+        rpmbuild_args = [
+            "rpmbuild",
+            "--target",
+            self.target['arch'],
+            "-bs",
+            self.pkg['zypper.specfile'],
+            "-D",
+            "_srcrpmdir "+zyprepo_src,
+            ] + self.get_defines()
+
+        if (call(rpmbuild_args)):
             self.fail("zypper build failed: rpmbuild call failed")
 
         # copy the source rpm
@@ -116,20 +135,28 @@ class PkgBuildZypperTask(Task):
                   '-it',
                   self.target['zypper::docker::image'],
                   'rebuild-src-rpm',
-                  self.pkg['rpm-name']])):
+                  self.pkg['rpm-name']]+self.get_defines())):
             self.fail("zypper build failed: rpmbuild call failed")
 
         return True
 
     def do_run_schroot(self):
         with schroot.create_session(self.target['zypper::schroot::image'], 'root') as session:
+
+            rpmbuild_args = ["rpmbuild", "--target", self.target['arch'], "-bs", self.pkg['zypper.specfile']]
+            defines = self.pkg['rpm-define']
+            if defines is not None:
+                for dname in defines.keys():
+                    rpmbuild_args.append("-D")
+                    rpmbuild_args.append(dname+" "+str(self.pkg['rpm-define::'+dname]))
+
             if (session.call([self.target['zypper::schroot::script'],
                               self.pkg['rpm-name'],
                               self.target['target.zyprepo'],
                               ('%d:%d' % (getuid(), getgid())),
                               abspath(self.target['zypper::schroot::cache']),
                               self.target['arch'],
-                             ])):
+                             ]+self.get_defines())):
                 self.fail("zypper build failed: rpmbuild call failed")
 
         return True
