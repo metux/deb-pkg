@@ -33,8 +33,10 @@ class PkgBuildZypperTask(Task):
             'zypper.rpm.tmpdir.specs':  '${zypper.rpm.tmpdir}/SPECS',
             'zypper.rpm.tmpdir.srcs':   '${zypper.rpm.tmpdir}/SOURCES',
             'zypper.tarball.name':      lambda: self.get_tarball_name(),
+            'zypper.tarball.defname':   '${package.name}-${package.version}.tar.gz',
             'zypper.tarball.pathname':  '${zypper.rpm.tmpdir}/SOURCES/${zypper.tarball.name}',
             'zypper.tarball.prefix':    lambda: self.get_tarball_prefix(),
+            'zypper.tarball.defprefix': '${package.name}-${package.version}/',
             'zypper.specfile':          '${package.src}/${rpm-name}.spec',
         })
 
@@ -48,7 +50,7 @@ class PkgBuildZypperTask(Task):
             m = re.search('^Source0:\s*(.*)$', l)
             if m is not None:
                 return basename(m.group(1))
-        return self.pkg['${package.name}-${package.version}.tar.gz']
+        return self.pkg['zypper.tarball.defname']
 
     def get_tarball_prefix(self):
         for l in check_output(["rpmspec", "-P", self.pkg['zypper.specfile']]).splitlines():
@@ -58,8 +60,7 @@ class PkgBuildZypperTask(Task):
                 for idx, val in enumerate(args):
                     if val == '-n':
                         return args[idx+1]+"/"
-
-        return '${package.name}-${package.version}/'
+        return self.pkg['zypper.tarball.defprefix']
 
     def do_run(self):
 
