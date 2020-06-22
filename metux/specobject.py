@@ -102,11 +102,11 @@ class SpecObject(object):
             return var
 
         if isinstance(var, basestring) or (isinstance(var, str)):
-            if var.lower() in ['true', 't', 'y', 'yes']:
-                return True
-
-            if var.lower() in ['false', 'f', 'n', 'no']:
-                return False
+#            if var.lower() in ['true', 't', 'y', 'yes']:
+#                return True
+#
+#            if var.lower() in ['false', 'f', 'n', 'no']:
+#                return False
 
             m = re.match(r"^\$\{([_a-zA-Z][_a-zA-Z0-9/\.\-\:]*)}$", var, re.M|re.I)
             if m:
