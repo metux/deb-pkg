@@ -97,10 +97,10 @@ class SpecObject(object):
             return var
 
         if isinstance(var, basestring) or (isinstance(var, str)):
-            if var.lower() in ['true', '1', 't', 'y', 'yes']:
+            if var.lower() in ['true', 't', 'y', 'yes']:
                 return True
 
-            if var.lower() in ['false', '0', 'f', 'n', 'no']:
+            if var.lower() in ['false', 'f', 'n', 'no']:
                 return False
 
             new = SubstTemplate(var).substitute(self._my_spec)
