@@ -30,6 +30,14 @@ class SpecObject(object):
     def get_cf(self, p, dflt = None):
         return self.cf_substvar(self.get_cf_raw(p, dflt))
 
+    """retrieve the first in a list of keys which returs non-None"""
+    def get_cf_either(self, plist, dflt=None):
+        for p in plist:
+            r = self.get_cf(p)
+            if r is not None:
+                return r
+        return dflt
+
     """retrieve a config element as dict"""
     def get_cf_dict(self, p):
         r = self.get_cf(p)
