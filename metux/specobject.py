@@ -4,6 +4,7 @@ from os.path import expanduser
 from metux.log import info
 from metux.lambdadict import LambdaDict
 from string import Template
+import re
 
 class SubstTemplate(Template):
     idpattern = r"[\@_a-zA-Z][_a-zA-Z0-9/\.\-\:]*"
@@ -102,6 +103,10 @@ class SpecObject(object):
 
             if var.lower() in ['false', 'f', 'n', 'no']:
                 return False
+
+            m = re.match(r"^\$\{([_a-zA-Z][_a-zA-Z0-9/\.\-\:]*)}$", var, re.M|re.I)
+            if m:
+                return self[m.group(1)]
 
             new = SubstTemplate(var).substitute(self._my_spec)
             if new == var:
