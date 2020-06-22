@@ -89,6 +89,10 @@ class SpecObject(object):
 
     """[private] variable substitution"""
     def cf_substvar(self, var):
+
+        if var is None:
+            return None
+
         if (var is None) or (isinstance(var,bool)) or (isinstance(var, (long, int))):
             return var
 
