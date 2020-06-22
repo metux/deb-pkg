@@ -6,7 +6,7 @@ from metux.lambdadict import LambdaDict
 from string import Template
 
 class SubstTemplate(Template):
-    idpattern = r"[_a-zA-Z][_a-zA-Z0-9/\.\-\:]*"
+    idpattern = r"[\@_a-zA-Z][_a-zA-Z0-9/\.\-\:]*"
 
 class SpecObject(object):
 
