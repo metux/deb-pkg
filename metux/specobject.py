@@ -120,6 +120,27 @@ class SpecObject(object):
 
         return var
 
+class PrefixSpecObject(SpecObject):
+
+    def __init__(self, parent, prefix):
+        self.parent = parent
+        self.prefix = prefix
+
+    """retrieve a config element by path and substitute variables"""
+    def get_cf(self, key, dflt = None):
+        if type(key)==tuple:
+            return self.parent.get_cf((self.prefix,)+key, dflt)
+        if type(key)==list:
+            return self.parent.get_cf([self.prefix]+key, dflt)
+        return self.parent.get_cf(self.prefix+'::'+key, dflt)
+
+    def default_set(self, key, val):
+        raise Exception("default_set() not supported")
+
+    """add a list of default values"""
+    def default_addlist(self, attrs):
+        raise Exception("default_addlist() not supported")
+
 class XfrmBase(SpecObject):
 
     def __init__(self, parent):
