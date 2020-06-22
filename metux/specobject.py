@@ -63,10 +63,14 @@ class SpecObject(object):
     def set_spec(self, s):
         self._my_spec = LambdaDict(s)
         self.default_addlist({
-            'user.uid':  lambda: str(getuid()),
-            'user.gid':  lambda: str(getgid()),
-            'user.home': lambda: expanduser('~'),
-            'user.cwd':  lambda: getcwd(),
+            'user.uid':       lambda: str(getuid()),
+            'user.gid':       lambda: str(getgid()),
+            'user.home':      lambda: expanduser('~'),
+            'user.cwd':       lambda: getcwd(),
+            '@STRLINES':      XfrmStrLines(self),
+            '@STRLIST':       XfrmStrList(self),
+            '@YESNO':         XfrmYesNo(self),
+            '@PROPS':         XfrmProps(self),
         })
 
     """get spec object"""
@@ -115,3 +119,37 @@ class SpecObject(object):
             return self.cf_substvar(new)
 
         return var
+
+class XfrmBase(SpecObject):
+
+    def __init__(self, parent):
+        self.parent = parent
+
+class XfrmStrLines(XfrmBase):
+
+    def get_cf(self, key, dflt = ""):
+        var = self.parent.get_cf(key, dflt)
+        s= "" if var is None else "\n".join(var)
+        return s
+
+class XfrmYesNo(XfrmBase):
+
+    def get_cf(self, key, dflt = False):
+        x = self.parent.get_cf_bool(key, dflt)
+        return "yes" if x else "no"
+
+class XfrmProps(XfrmBase):
+
+    def get_cf(self, key, dflt = ""):
+        var = self.parent.get_cf(key, dflt)
+        if var is None:
+            return dflt
+        return "\n".join([name+" "+url for name, url in var.iteritems()])
+
+class XfrmStrList(XfrmBase):
+
+    def get_cf(self, key, dflt = ""):
+        var = self.parent.get_cf(key, dflt)
+        if var is None:
+            return dflt
+        return " ".join(var)
