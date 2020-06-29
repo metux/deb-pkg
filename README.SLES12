@@ -1,0 +1,15 @@
+
+Notes for the preconfigured SLES12 branch:
+
+* this branch is preconfigured for building several additional repos for SLES12:
+
+  sles12-devel      some development tools (eg. schroot, tig)
+  sles12-pg12       PostgreSQL 12.x with Repmgr
+  sles12-pg10-nis   PostgreSQL 10.x with Repmgr, PostGIS and support libraries
+  sles12-pgbouncer  PgBouncer
+
+* build process is run by the build.* scripts, there's one per target pool.
+
+* zypper repos are generated under the .zyprepo subdir
+
+* the script 'publish-repo' copies the final repos to /var/zyprepos
