@@ -170,5 +170,3 @@ A: The default behaviour is cloning the git repos only one and nevery overwritin
    Warning: this mode *destroys* all locally made changes on each build !
 
 ---
-
-   
