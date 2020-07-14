@@ -56,11 +56,14 @@ packages:
         autobuild-ref:      refs/remotes/upstream/master
         init-submodules:    true
 
+    evince@3.37.3:
+
 pools:
 
     default:
         packages:
-            - telegram-purple@1.4.3
+            - evince@3.37.3
+#            - telegram-purple@1.4.3
 #            - docker-enter@0.1
 #            - neomutt@20191207
 #            - golang-github-pkg-errors@0.8.1
