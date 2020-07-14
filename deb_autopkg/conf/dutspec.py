@@ -1,4 +1,4 @@
-from metux.log import info
+from metux.util.log import info
 from metux.util.specobject import SpecObject
 from subprocess import call
 

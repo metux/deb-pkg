@@ -1,5 +1,5 @@
 import yaml
-from metux.log import info, warn
+from metux.util.log import info, warn
 from metux.git import GitRepo
 from metux.util.specobject import SpecObject
 

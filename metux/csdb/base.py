@@ -1,5 +1,5 @@
 import yaml
-from ..log import info, err, debug
+from ..util.log import info, err, debug
 
 class BaseSpec:
 

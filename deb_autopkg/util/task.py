@@ -1,4 +1,4 @@
-from metux.log import warn, info
+from metux.util.log import warn, info
 
 class TaskFail(Exception):
 
