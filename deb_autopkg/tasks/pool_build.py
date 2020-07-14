@@ -1,5 +1,4 @@
-from ..util.task import Task
-
+from metux.util.task import Task
 from .pkg_build import alloc as pkg_build_alloc
 
 """Target: build a whole pool of packages"""

@@ -1,4 +1,4 @@
-from ..util.task import Task
+from metux.util.task import Task
 
 """Target: deploy a whole pool of packages to dut"""
 class PoolDeployTask(Task):

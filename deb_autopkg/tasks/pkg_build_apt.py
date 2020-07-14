@@ -1,4 +1,4 @@
-from ..util.task import Task
+from metux.util.task import Task
 from os import environ
 from copy import copy
 from subprocess import call

@@ -1,4 +1,4 @@
-from .task import Task, TaskFail
+from metux.util.task import Task, TaskFail
 from metux.util.git import GitRepo
 
 """Task: clone an git repo w/ initial checkout"""

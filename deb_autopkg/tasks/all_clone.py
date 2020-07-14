@@ -1,5 +1,4 @@
-from ..util.task import Task
-
+from metux.util.task import Task
 from .pkg_clone import alloc as pkg_clone_alloc
 from .dckbp_clone import alloc as dckbp_clone_alloc
 

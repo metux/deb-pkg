@@ -1,4 +1,4 @@
-from ..util.task import Task
+from metux.util.task import Task
 from ..util.upload import run_upload
 
 """Target: upload a whole pool of packages to testbox / repo server"""

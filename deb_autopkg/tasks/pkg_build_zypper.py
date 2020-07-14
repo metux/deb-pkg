@@ -1,4 +1,4 @@
-from ..util.task import Task
+from metux.util.task import Task
 from os import getuid, getgid
 from os.path import abspath
 from subprocess import call, Popen, PIPE

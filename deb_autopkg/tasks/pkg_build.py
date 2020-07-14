@@ -1,5 +1,4 @@
-from ..util.task import Task
-
+from metux.util.task import Task
 from .pkg_build_target import alloc as pkg_build_target_alloc
 
 class PkgBuildTask(Task):
