@@ -1,5 +1,5 @@
 from metux.log import info
-from metux.specobject import SpecObject
+from metux.util.specobject import SpecObject
 from subprocess import call
 
 """DUT configuration"""
