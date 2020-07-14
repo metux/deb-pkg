@@ -1,5 +1,5 @@
 from subprocess import call
-from ..conf.err import ConfigFail
+from metux.util.specobject import SpecError
 
 def rsync_ssh(username, hostname, source, path):
     return (call([
@@ -14,4 +14,4 @@ def run_upload(param):
     if param['protocol'] == 'rsync+ssh':
         return rsync_ssh(param['username'], param['hostname'], param['source'], param['path']);
 
-    raise ConfigFail("unknown upload protocol: %s" % param['protocol'])
+    raise SpecError("unknown upload protocol: %s" % param['protocol'])
