@@ -1,0 +1,84 @@
+name: autobuild
+
+on:
+  push:
+    branches:
+      - master
+      - 'release/**'
+      - 'submit/**'
+      - 'testing/**'
+      - 'wip/**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-all:
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04, ubuntu-22.04 ]
+    name: on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 1440
+    env:
+      DEBPKG_GITHUB_ANONYMOUS: 1
+      DEBIAN_FRONTEND: noninteractive
+      BRANCH: ${{ github.ref_name }}
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 5
+
+      - name: Tool install
+        run: sudo apt-get install -y debootstrap
+
+      # make sure we have *some* GPG key for apt repo signing
+      # doesn't need to be kept secure as nobody really trusts it anyways
+
+      - name: Cache gpg key
+        id: cache-gpg
+        uses: actions/cache@v3
+        with:
+          path: ~/.gnupg
+          key: gnupg
+
+      - if: ${{ steps.cache-gpg.outputs.cache-hit != 'true' }}
+        name: Generate gpg key (if necessary)
+        run: ./.github/scripts/gen-gpg-key.sh
+
+      # cache apt repo and state, so we don't need full rebuild every time
+      # note: for different branches, need different name
+
+      - name: Cache apt repo and state files
+        id: cache-repo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/.aptrepo
+            ${{ github.workspace }}/.stat
+          key: repobuild-${{ runner.os }}-${{ runner.arch }}-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
+          restore-keys: |
+            repobuild-${{ runner.os }}-${{ runner.arch }}-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
+            repobuild-${{ runner.os }}-${{ runner.arch }}-${{ matrix.os }}+${{ github.ref_name }}@
+
+      # run the actual builders
+
+      - name: Run builders
+        run: |
+          for scr in ./build.* ; do
+            if [ -x $scr ]; then
+              echo "---> Calling builder: $scr"
+              $scr || exit $?
+            fi
+          done
+
+      # upload the generated apt repo as artifact
+
+      - name: compute sanitized branch name
+        run: echo "CLEANED_BRANCH=${BRANCH/\//-}" >> $GITHUB_ENV
+
+      - name: Archive final apt repo
+        uses: actions/upload-artifact@v3
+        with:
+          name: aptrepo-built-on-${{ matrix.os }}-branch-${{ env.CLEANED_BRANCH }}
+          path: .aptrepo
