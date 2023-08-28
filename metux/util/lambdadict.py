@@ -2,7 +2,7 @@
 # Copyright (C) Enrico Weigelt, metux IT consult <info@metux.net>
 
 from inspect import isfunction
-from collections import Mapping, MutableSequence
+from collections.abc import Mapping, MutableSequence
 from metux.util.log import info
 
 def isarray(item):

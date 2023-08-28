@@ -5,7 +5,7 @@ import yaml
 from metux.util.log import info
 from metux.util.lambdadict import LambdaDict, LambdaDictFilter
 from string import Template
-from collections import MutableSequence
+from collections.abc import MutableSequence
 import re
 
 try:

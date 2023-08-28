@@ -6,7 +6,7 @@
 [subrepo]
 	remote = git@github.com:metux/metux_py_util.git
 	branch = master
-	commit = 16a12be489e29ea6fa9057fd3a014b251600dc8d
-	parent = 9ce314cc4854bf2e03d61ae1f364f6329b2140a8
+	commit = 8878b75896dd03cffd1aa7368493820392e2b07c
+	parent = 90dfd5f158f37e85f1d759f63b59624ca33f3b89
 	method = merge
 	cmdver = 0.4.3
