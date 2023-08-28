@@ -32,6 +32,7 @@ class Config(SpecObject):
             'ENV':                  environ,
             'config.basedir':       lambda: getcwd(),
             'config.prefix':        '${GLOBAL::config.basedir}/cf',
+            'csdb::path':           '${GLOBAL::config.prefix}/csdb',
             'pathes::pkg-prefix':   '${GLOBAL::config.basedir}/pkg/',
             'pathes::pkg-suffix':   '.git',
         })
