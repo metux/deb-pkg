@@ -27,6 +27,11 @@ class Config(SpecObject):
         self.__intrinsics()
 
     def __intrinsics(self):
+        if environ.get('DEBPKG_GITHUB_ANONYMOUS'):
+            github_prefix = '${GLOBAL::pathes::github::anonymous}'
+        else:
+            github_prefix = '${GLOBAL::pathes::github::user}'
+
         self.default_addlist({
             'GLOBAL':               self,
             'ENV':                  environ,
@@ -35,6 +40,10 @@ class Config(SpecObject):
             'csdb::path':           '${GLOBAL::config.prefix}/csdb',
             'pathes::pkg-prefix':   '${GLOBAL::config.basedir}/pkg/',
             'pathes::pkg-suffix':   '.git',
+            'pathes::github::user':       'git@github.com:',
+            'pathes::github::anonymous':  'https://github.com/',
+            'pathes::oss-qm::mirror':     '${GLOBAL::pathes::github::current}oss-qm/',
+            'pathes::github::current':    github_prefix,
         })
 
     """load a target config"""
