@@ -13,7 +13,8 @@ def cmdfunc(func):
     @functools.wraps(func)
     def wrapper_cmdfunc(*args, **kwargs):
         try:
-            return func(*args, **kwargs)
+            func(*args, **kwargs)
+            return 0
         except TaskFail as ex:
             err("[%s] %s" % (ex.get_task_name(), ex.get_message()))
             return 127
