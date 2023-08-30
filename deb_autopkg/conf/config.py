@@ -69,6 +69,9 @@ class Config(SpecObject):
             warn("CSDB path should be specified in 'csdb:' block.")
             csdb_path = self.get_pathconf('csdb-path')
 
+        if csdb_path is None:
+            warn("CSDB path not defined")
+
         self.csdb = CSDB(csdb_path, self.get_cf(['csdb', 'sections']))
 
         # load target configs
@@ -109,7 +112,7 @@ class Config(SpecObject):
     def _cf_dckbp(self, key, dflt, wmsg):
         cf = self.get_cf(['dck-buildpackage', key])
         if cf is None:
-            warn(wmsg)
+            info(wmsg)
             return dflt
         return cf
 
@@ -126,12 +129,12 @@ class Config(SpecObject):
         my_url = self._cf_dckbp(
             'git-url',
             'https://github.com/metux/docker-buildpackage.git',
-            'dck-buildpackage.git-repo not defined. using default')
+            'dck-buildpackage::git-repo not defined. using default')
 
         my_branch = self._cf_dckbp(
             'git-branch',
             'master',
-            "dck-buildpackage.git-repo not defined. assuming 'master'")
+            "dck-buildpackage::git-repo not defined. assuming 'master'")
 
         return {
             'path':        self.get_dckbp_path(),
