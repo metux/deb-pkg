@@ -15,7 +15,6 @@ class PoolSpec(SpecObject):
         self.conf = conf
         self.default_addlist({
             'GLOBAL':         conf,
-            'config.basedir': "${GLOBAL::config.basedir}",
             'pool.name':      name,
             'pool.aptrepo':   '${GLOBAL::config.basedir}/.aptrepo/${pool.name}',
             'pool.zyprepo':   '${GLOBAL::config.basedir}/.zyprepo/${pool.name}',

@@ -16,8 +16,6 @@ class TargetSpec(SpecObject):
         self.default_addlist({
             'GLOBAL':         conf,
             'POOL':           pool,
-            'config.basedir': "${GLOBAL::config.basedir}",
-            'config.prefix':  "${GLOBAL::config.prefix}",
             'name':           name,
             'pool.name':      lambda: 'global' if self.pool is None else self.pool['pool.name'],
             'dck-buildpackage::target':   "${dck-buildpackage::target}",

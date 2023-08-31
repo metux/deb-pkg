@@ -48,7 +48,6 @@ class PkgSpec(SpecObject):
         ## add variables for substitution
         self.default_addlist({
             'GLOBAL':          self.conf,
-            'config.basedir':  "${GLOBAL::config.basedir}",
             'package.version': lambda: self.package_version,
             'package.name':    lambda: self.package_name,
             'package.fqname':  lambda: self.name,
