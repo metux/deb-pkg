@@ -19,32 +19,9 @@ jobs:
     name: on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 1440
-    env:
-      DEBPKG_GITHUB_ANONYMOUS: 1
-      DEBIAN_FRONTEND: noninteractive
-      BRANCH: ${{ github.ref_name }}
     steps:
-      - name: Clone repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 5
-
-      - name: Tool install
-        run: sudo apt-get install -y debootstrap
-
-      # make sure we have *some* GPG key for apt repo signing
-      # doesn't need to be kept secure as nobody really trusts it anyways
-
-      - name: Cache gpg key
-        id: cache-gpg
-        uses: actions/cache@v3
-        with:
-          path: ~/.gnupg
-          key: gnupg
-
-      - if: ${{ steps.cache-gpg.outputs.cache-hit != 'true' }}
-        name: Generate gpg key (if necessary)
-        run: ./.github/scripts/gen-gpg-key.sh
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-worker
 
       # cache apt repo and state, so we don't need full rebuild every time
       # note: for different branches, need different name
@@ -71,14 +48,13 @@ jobs:
               $scr || exit $?
             fi
           done
+        env:
+          DEBPKG_GITHUB_ANONYMOUS: 1
 
       # upload the generated apt repo as artifact
-
-      - name: compute sanitized branch name
-        run: echo "CLEANED_BRANCH=${BRANCH/\//-}" >> $GITHUB_ENV
 
       - name: Archive final apt repo
         uses: actions/upload-artifact@v3
         with:
-          name: aptrepo-built-on-${{ matrix.os }}-branch-${{ env.CLEANED_BRANCH }}
+          name: aptrepo-built-on-${{ matrix.os }}-branch-${{ env.BRANCH_IDENT }}
           path: .aptrepo

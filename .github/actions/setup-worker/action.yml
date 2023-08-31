@@ -1,0 +1,39 @@
+# make sure we have *some* GPG key for apt repo signing
+# doesn't need to be kept secure as nobody really trusts it anyways
+
+name: "Setup the worker node"
+description: "Install all tools, generate key, ..."
+runs:
+  using: "composite"
+  steps:
+    - name: Clone repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 5
+
+    - name: Tool install
+      run: sudo apt-get install -y debootstrap
+      shell: bash
+      env:
+        DEBIAN_FRONTEND: noninteractive
+
+    # make sure we have *some* GPG key for apt repo signing
+    # doesn't need to be kept secure as nobody really trusts it anyways
+
+    - name: Cache gpg key
+      id: cache-gpg
+      uses: actions/cache@v3
+      with:
+        path: ~/.gnupg
+        key: gnupg
+
+    - if: ${{ steps.cache-gpg.outputs.cache-hit != 'true' }}
+      name: Generate gpg key (if necessary)
+      run: ./.github/scripts/gen-gpg-key.sh
+      shell: bash
+
+    - name: compute sanitized branch name
+      run: echo "BRANCH_IDENT=${BRANCH/\//-}" >> $GITHUB_ENV
+      shell: bash
+      env:
+        BRANCH: ${{ github.ref_name }}
