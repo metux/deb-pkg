@@ -33,9 +33,9 @@ class PkgBuildTargetTask(Task):
             tasks.append(pkg_build_zypper_alloc(self.conf, self.pkg, self.target))
         else:
             self.fail('unknown packager "%s" for target %s' %
-                        (packager, self.target['target.name']))
+                        (packager, self.target['name']))
 
         return tasks
 
 def alloc(conf, pkg, target):
-    return conf.cached_task_alloc('build-pkg-target:'+target['target.name']+':'+pkg.name, PkgBuildTargetTask, { 'pkg': pkg, 'target': target })
+    return conf.cached_task_alloc('build-pkg-target:'+target['name']+':'+pkg.name, PkgBuildTargetTask, { 'pkg': pkg, 'target': target })

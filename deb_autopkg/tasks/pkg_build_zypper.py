@@ -81,8 +81,8 @@ class PkgBuildZypperTask(Task):
         return ret
 
     def do_run_docker(self):
-        container_name = "build-zypper-"+self.target['target.name']+"-"+self.pkg.package_name
-        cache_volume   = "build-zypper-"+self.target['target.name']+"-zypcache"
+        container_name = "build-zypper-"+self.target['name']+"-"+self.pkg.package_name
+        cache_volume   = "build-zypper-"+self.target['name']+"-zypcache"
 
         if (call(['docker',
                   'run',
@@ -119,4 +119,4 @@ class PkgBuildZypperTask(Task):
         return not self.statfile.check(self.pkg.git_repo().get_head_commit())
 
 def alloc(conf, pkg, target):
-    return conf.cached_task_alloc('build-pkg-zypper:'+target['target.name']+':'+pkg.name, PkgBuildZypperTask, { 'pkg': pkg, 'target': target })
+    return conf.cached_task_alloc('build-pkg-zypper:'+target['name']+':'+pkg.name, PkgBuildZypperTask, { 'pkg': pkg, 'target': target })

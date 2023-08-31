@@ -19,7 +19,6 @@ class TargetSpec(SpecObject):
             'config.basedir': "${GLOBAL::config.basedir}",
             'config.prefix':  "${GLOBAL::config.prefix}",
             'name':           name,
-            'target.name':    name,
             'pool.name':      lambda: 'global' if self.pool is None else self.pool['pool.name'],
             'dck-buildpackage::target':   "${dck-buildpackage::target}",
             'apt-repo::ident':            "${name}",
@@ -48,11 +47,11 @@ class TargetSpec(SpecObject):
             pkgname = pkg
 
         return self.conf.get_statfile(
-            "build."+self['pool.name']+"."+self['target.name']+"."+pkgname)
+            "build."+self['pool.name']+"."+self['name']+"."+pkgname)
 
     def get_packager(self):
         p = self.get_cf('packager', None)
         if p is None:
-            warn("Target %s has no packager specified. Defaulting to apt" % self['target.name'])
+            warn("Target %s has no packager specified. Defaulting to apt" % self['name'])
             return 'apt'
         return p

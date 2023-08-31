@@ -27,7 +27,7 @@ class PkgBuildAptTask(Task):
 
         self.log_info(
             'building "%s" from %s for %s aptrepo: %s' %
-            (pkg_name, tgt['pool.name'], tgt['target.name'], tgt['apt-repo::path']))
+            (pkg_name, tgt['pool.name'], tgt['name'], tgt['apt-repo::path']))
 
         if (call([self.conf.get_dckbp_cmd(),
                   '--target',
@@ -44,4 +44,4 @@ class PkgBuildAptTask(Task):
         return not self.statfile.check(self.pkg.git_repo().get_head_commit())
 
 def alloc(conf, pkg, target):
-    return conf.cached_task_alloc('build-pkg-apt:'+target['target.name']+':'+pkg.name, PkgBuildAptTask, { 'pkg': pkg, 'target': target })
+    return conf.cached_task_alloc('build-pkg-apt:'+target['name']+':'+pkg.name, PkgBuildAptTask, { 'pkg': pkg, 'target': target })
