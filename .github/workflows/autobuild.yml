@@ -56,10 +56,10 @@ jobs:
           path: |
             ${{ github.workspace }}/.aptrepo
             ${{ github.workspace }}/.stat
-          key: repobuild-${{ runner.os }}-${{ runner.arch }}-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
+          key: repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
           restore-keys: |
-            repobuild-${{ runner.os }}-${{ runner.arch }}-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
-            repobuild-${{ runner.os }}-${{ runner.arch }}-${{ matrix.os }}+${{ github.ref_name }}@
+            repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
+            repobuild-${{ matrix.os }}+${{ github.ref_name }}@
 
       # run the actual builders
 
