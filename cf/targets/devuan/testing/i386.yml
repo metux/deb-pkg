@@ -1,0 +1,11 @@
+arch: i386
+
+packager: apt
+
+dck-buildpackage:
+    target: devuan-${apt-repo::suite}-${arch}
+
+apt-repo:
+    # put all architectures into one repo
+    suite: testing
+    ident: devuan/${apt-repo::suite}
