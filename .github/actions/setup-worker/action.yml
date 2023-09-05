@@ -37,3 +37,10 @@ runs:
       shell: bash
       env:
         BRANCH: ${{ github.ref_name }}
+
+    - name: Cache base rootfs
+      id: cache-rootfs
+      uses: actions/cache@v3
+      with:
+        path: /tmp/dck-buildpackage/debootstrap-tarballs
+        key: rootfs
