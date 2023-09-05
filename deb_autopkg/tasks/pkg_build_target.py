@@ -19,7 +19,14 @@ class PkgBuildTargetTask(Task):
 
     """[override]"""
     def get_subtasks(self):
+        if self.pkg.skipped_on_target(self.target):
+            self.log_info("skipped on target %s" % self.target['name'])
+            return []
+
+        self.log_info("building on target %s" % self.target['name'])
+
         tasks = []
+
         tasks.append(pkg_clone_alloc(self.conf, self.pkg))
 
         for pkg in self.pkg.get_depends_packages():

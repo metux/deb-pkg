@@ -93,3 +93,14 @@ class PkgSpec(SpecObject):
             'init-submodules':  self['init-submodules'],
             'init-force':       self['autobuild-force'],
         }
+
+    """check whether package is skipped on given target"""
+    def skipped_on_target(self, target):
+        target_name = target['name']
+        skiplist = self['skip-on-target']
+        if skiplist is not None:
+            for sk in skiplist:
+                if sk == target_name:
+                    return True
+
+        return False
