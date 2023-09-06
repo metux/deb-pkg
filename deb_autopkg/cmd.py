@@ -6,7 +6,6 @@ from .conf import load
 from metux.util.specobject import SpecError
 from metux.util.task import TaskFail
 from metux.util.log import err
-
 import functools
 
 def cmdfunc(func):
@@ -63,3 +62,12 @@ def dut_exec(conffile, dutname, cmd = []):
 def pool_invalidate_target_package(conffile, poolname, pkgname, targetname):
     get_builder(conffile).conf.get_pool(poolname).invalidate_target_package(pkgname, targetname)
     return True
+
+@cmdfunc
+def tool_repo_build_pool(argv):
+    if len(argv) < 3:
+        print("%s <config-file> <pool>" % argv[0])
+        print("")
+        print("Build a package repo pool from given config file")
+        return 1
+    return build_pool(argv[1], argv[2])

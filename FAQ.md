@@ -1,4 +1,11 @@
 
+Q: How to start simple build ?
+
+A: Pick an example config (e.g. from `cf/repos/...`) and call the `repo-build-pool`
+   with config file name and pool name as arguments (pool usually is `default`)
+
+---
+
 Q: What does 'pool' mean here ?
 
 A: Pools are used for organizing sets of packages. Each pool lives entirely on
