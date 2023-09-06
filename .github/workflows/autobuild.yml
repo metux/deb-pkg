@@ -33,9 +33,9 @@ jobs:
           path: |
             ${{ github.workspace }}/.aptrepo
             ${{ github.workspace }}/.stat
-          key: repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
+          key: repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ env.CONIFG_HASH }}
           restore-keys: |
-            repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ hashFiles('cf/**/*.yml') }}
+            repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ env.CONFIG_HASH }}
             repobuild-${{ matrix.os }}+${{ github.ref_name }}@
 
       # run the actual builders

@@ -11,6 +11,12 @@ runs:
       with:
         fetch-depth: 5
 
+    - name: Compute config hash
+      run: echo "CONFIG_HASH=${HASH}" >> $GITHUB_ENV
+      shell: bash
+      env:
+        HASH: ${{ hashFiles('cf/**/*.yml') }}
+
     - name: Tool install
       run: sudo apt-get install -y debootstrap
       shell: bash
