@@ -65,9 +65,14 @@ def pool_invalidate_target_package(conffile, poolname, pkgname, targetname):
 
 @cmdfunc
 def tool_repo_build_pool(argv):
-    if len(argv) < 3:
-        print("%s <config-file> <pool>" % argv[0])
+    if len(argv) < 2:
+        print("%s <config-file> [pool]" % argv[0])
         print("")
         print("Build a package repo pool from given config file")
+        print("If no pool given, the setting defaults::build-pool is used (defaults to 'default')")
         return 1
+
+    if len(argv) < 3:
+        return build_pool(argv[1], None)
+
     return build_pool(argv[1], argv[2])

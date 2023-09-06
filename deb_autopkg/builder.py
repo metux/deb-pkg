@@ -23,6 +23,16 @@ class Builder:
         return self._run(all_clone.alloc(self.conf))
 
     def build_pool(self, name):
+        if name is None or name == '':
+            name = self.conf['defaults::build-pool']
+
+        if isinstance(name, list):
+            r = True
+            for n in name:
+                if n is not None and n != '':
+                    r = r and self.build_pool(n)
+            return r
+
         pool = self.conf.get_pool(name)
         if pool is None:
             raise SpecError("undefined pool: "+name)

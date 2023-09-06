@@ -44,6 +44,7 @@ class Config(SpecObject):
             'pathes::github::anonymous':  'https://github.com/',
             'pathes::oss-qm::mirror':     '${GLOBAL::pathes::github::current}oss-qm/',
             'pathes::github::current':    github_prefix,
+            'defaults::build-pool':       'default',
         })
 
     """load a target config"""
