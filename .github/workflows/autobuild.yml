@@ -40,6 +40,9 @@ jobs:
 
       # run the actual builders
 
+      - name: Build all base images
+        run: find cf/repos/ -name "*.yml" -exec "./repo-build-baseimage" "{}" ";"
+
       - name: Run builders
         run: |
           for scr in ./build.* ; do
