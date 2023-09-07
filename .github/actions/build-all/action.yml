@@ -1,0 +1,23 @@
+# make sure we have *some* GPG key for apt repo signing
+# doesn't need to be kept secure as nobody really trusts it anyways
+
+name: "Build all"
+description: "Builds all base images for all configured targets"
+runs:
+  using: "composite"
+  steps:
+    - name: build all base images
+      run:  find cf/repos/ -name "*.yml" -exec "./repo-build-baseimage" "{}" ";"
+      shell: bash
+
+    - name: Run builder scripts
+      shell: bash
+      run: |
+          for scr in ./build.* ; do
+            if [ -x $scr ]; then
+              echo "---> calling builder script: $scr"
+              $scr || exit $?
+            fi
+          done
+      env:
+        DEBPKG_GITHUB_ANONYMOUS: 1
