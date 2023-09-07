@@ -38,21 +38,7 @@ jobs:
             repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ env.CONFIG_HASH }}
             repobuild-${{ matrix.os }}+${{ github.ref_name }}@
 
-      # run the actual builders
-
-      - name: Build all base images
-        run: find cf/repos/ -name "*.yml" -exec "./repo-build-baseimage" "{}" ";"
-
-      - name: Run builders
-        run: |
-          for scr in ./build.* ; do
-            if [ -x $scr ]; then
-              echo "---> Calling builder: $scr"
-              $scr || exit $?
-            fi
-          done
-        env:
-          DEBPKG_GITHUB_ANONYMOUS: 1
+      - uses: ./.github/actions/build-all
 
       # upload the generated apt repo as artifact
 
