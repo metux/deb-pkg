@@ -49,6 +49,3 @@ class Builder:
         if pool is None:
             raise SpecError("undefined pool: "+name)
         return self._run(pool_deploy.alloc(self.conf, self.conf.get_pool(name)))
-
-    def build_all(self):
-        return self._run(build_all.alloc(self.conf))
