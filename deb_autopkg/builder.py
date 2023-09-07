@@ -2,7 +2,7 @@
 # Copyright (C) Enrico Weigelt, metux IT consult <info@metux.net>
 
 from metux.util.task import TaskRunner
-from .tasks import pkg_build, pkg_clone, all_clone, pool_build, pool_upload, pool_deploy
+from .tasks import pkg_build, pkg_clone, all_clone, all_baseimage, pool_build, pool_upload, pool_deploy
 from metux.util.specobject import SpecError
 
 class Builder:
@@ -21,6 +21,9 @@ class Builder:
 
     def clone_all(self):
         return self._run(all_clone.alloc(self.conf))
+
+    def baseimage_all(self):
+        return self._run(all_baseimage.alloc(self.conf))
 
     def build_pool(self, name):
         if name is None or name == '':

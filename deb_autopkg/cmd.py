@@ -47,6 +47,10 @@ def clone_all(conffile):
     return Builder(load(conffile)).clone_all()
 
 @cmdfunc
+def baseimage_all(conffile):
+    return Builder(load(conffile)).baseimage_all()
+
+@cmdfunc
 def get_builder(conffile):
     return Builder(load(conffile))
 
@@ -76,3 +80,13 @@ def tool_repo_build_pool(argv):
         return build_pool(argv[1], None)
 
     return build_pool(argv[1], argv[2])
+
+@cmdfunc
+def tool_repo_build_rootfs(argv):
+    if len(argv) < 2:
+        print("%s <config-file>" % argv[0])
+        print("")
+        print("Build root filesystems for targets in given config file")
+        return 1
+
+    return baseimage_all(argv[1])

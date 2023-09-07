@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+import sys, deb_autopkg
+from deb_autopkg import cmd
+sys.exit(cmd.tool_repo_build_rootfs(sys.argv))
