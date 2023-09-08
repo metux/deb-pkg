@@ -73,7 +73,7 @@ class GlobalSpec(SpecObject):
         if csdb_path is None:
             warn("CSDB path not defined")
 
-        self.csdb = CSDB(csdb_path, self.get_cf(['csdb', 'sections']))
+        self.csdb = CSDB(csdb_path, self.get_cf(['csdb::sections']))
 
         # load target configs
         for t in self.get_cf('targets'):
@@ -111,7 +111,7 @@ class GlobalSpec(SpecObject):
 
     """[private]"""
     def _cf_dckbp(self, key, dflt, wmsg):
-        cf = self.get_cf(['dck-buildpackage', key])
+        cf = self.get_cf(['dck-buildpackage::'+key])
         if cf is None:
             info(wmsg)
             return dflt

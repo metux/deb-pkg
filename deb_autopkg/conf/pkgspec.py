@@ -56,7 +56,7 @@ class PkgSpec(SpecObject):
         })
 
         # add global defaults
-        self.default_addlist(self.conf['defaults','packages'])
+        self.default_addlist(self.conf['defaults::packages'])
 
     """get the global config"""
     def get_conf(self):

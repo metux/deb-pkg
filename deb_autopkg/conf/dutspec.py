@@ -28,9 +28,9 @@ class DutSpec(SpecObject):
 
     """execute command on DUT"""
     def dut_exec(self, cmd):
-        hostname = self.get_cf(['ssh', 'hostname'])
-        username = self.get_cf(['ssh', 'username'])
-        port = str(self.get_cf(['ssh', 'port']))
+        hostname = self.get_cf(['ssh::hostname'])
+        username = self.get_cf(['ssh::username'])
+        port = str(self.get_cf(['ssh::port']))
 
         info("executing on DUT: %s" % repr(cmd))
 
