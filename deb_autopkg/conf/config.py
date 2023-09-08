@@ -14,7 +14,7 @@ from metux.util.log import info, warn, err
 from metux.util.specobject import SpecObject, SpecError
 
 """global configuration"""
-class Config(SpecObject):
+class GlobalSpec(SpecObject):
 
     """[private]"""
     def __init__(self):
