@@ -15,7 +15,7 @@ dck-buildpackage tool) and puts them into installable apt repos.
 
 Configuration is done via yaml. (see packages.yml for an example)
 
-See [FAQ](FAQ.md)
+See [specification objects](doc/spec-objects.md) and [FAQ](FAQ.md)
 
 NOTE: documentation is still scarce. Feel free to ask if you have questions.
 
