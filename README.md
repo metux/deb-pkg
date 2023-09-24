@@ -11,9 +11,7 @@ Configuration is done via yaml. (see packages.yml for an example)
 
 See [FAQ](FAQ.md)
 
-NOTE: this is still experimental - before using it in production,
-please consult me first.
-
+NOTE: documentation is still scarce. Feel free to ask if you have questions.
 
 Contact: Enrico Weigelt, metux IT consult <info@metux.net>
 License: AGPL v3
