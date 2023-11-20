@@ -1,5 +1,5 @@
 name: Bug report
-description: Create a bug report to help improve nerdctl
+description: Create a bug report to help improve deb-pkg
 labels: kind/unconfirmed-bug-claim
 body:
   - type: markdown
