@@ -97,5 +97,5 @@ pools:
             - nerdctl@master
             - dqlite@master
 #            - lxc-incus@master
-            - docker-cli@master
+#            - docker-cli@master
 #            - moby-engine@master
