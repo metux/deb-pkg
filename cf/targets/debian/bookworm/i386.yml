@@ -1,0 +1,11 @@
+arch: i386
+
+packager: apt
+
+dck-buildpackage:
+    target: debian-${apt-repo::suite}-${arch}
+
+apt-repo:
+    # put all architectures into one repo
+    suite: bookworm
+    ident: debian/${apt-repo::suite}
