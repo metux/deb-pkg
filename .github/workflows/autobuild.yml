@@ -57,7 +57,7 @@ jobs:
       # upload the generated apt repo as artifact
 
       - name: Archive final apt repo
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: aptrepo-built-on-${{ matrix.os }}-branch-${{ env.BRANCH_IDENT }}
           path: .aptrepo
