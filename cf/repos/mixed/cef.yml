@@ -1,0 +1,34 @@
+targets:
+    - debian/bookworm/amd64
+    - devuan/daedalus/amd64
+
+csdb:
+    sections:
+         - upstream
+         - oss-qm
+         - metux
+
+pathes:
+    remote-names:
+        - upstream
+        - oss-qm
+        - metux
+
+defaults:
+    packages:
+        autobuild-ref:    oss-qm/debian/maint-${package.version}
+        autobuild-local:  debian/maint-${package.version}
+
+packages:
+
+    wine@10.20:
+
+    browserd@master:
+        autobuild-ref:    metux/${package.version}
+        autobuild-local:  ${package.version}
+
+pools:
+    default:
+        packages:
+            - wine@10.20
+            - browserd@master

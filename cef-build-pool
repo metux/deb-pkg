@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./repo-build-pool cf/repos/mixed/cef.yml
