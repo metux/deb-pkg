@@ -1,0 +1,17 @@
+targets:
+    - devuan/daedalus/amd64
+#    - devuan/daedalus/i386
+
+defaults:
+    packages:
+        autobuild-ref:    oss-qm/debian/maint-${package.version}
+        autobuild-local:  debian/maint-${package.version}
+
+packages:
+
+    wizardry7@master:
+
+pools:
+    default:
+        packages:
+            - wizardry7@master
