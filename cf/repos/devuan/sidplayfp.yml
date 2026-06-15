@@ -1,0 +1,46 @@
+targets:
+    - devuan/excalibur/amd64
+    - devuan/excalibur/i386
+
+defaults:
+    build-pool:
+        - sidplayfp-release
+        - sidplayfp-master
+    packages:
+        autobuild-ref:    oss-qm/debian/maint-${package.version}
+        autobuild-local:  debian/maint-${package.version}
+
+packages:
+
+    libresidfp@1.0.2:
+
+    libresidfp@master:
+
+    libsidplayfp@3.0.1:
+        depends:
+            - libresidfp@1.0.2
+
+    libsidplayfp@master:
+        depends:
+            - libresidfp@master
+
+    sidplayfp@3.0.2:
+        depends:
+            - libsidplayfp@3.0.1
+
+    sidplayfp@master:
+        depends:
+            - libsidplayfp@master
+
+pools:
+    sidplayfp-release:
+        packages:
+            - libresidfp@1.0.2
+            - libsidplayfp@3.0.1
+            - sidplayfp@3.0.2
+
+    sidplayfp-master:
+        packages:
+            - libresidfp@master
+            - libsidplayfp@master
+            - sidplayfp@master

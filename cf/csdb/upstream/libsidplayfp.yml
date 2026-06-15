@@ -1,0 +1,4 @@
+---
+git.url:      https://github.com/libsidplayfp/libsidplayfp.git
+git.branch:   master
+init-submodules: true
