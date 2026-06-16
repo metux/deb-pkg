@@ -25,6 +25,9 @@ class PkgSpec(SpecObject):
                 dbname+'-url':    self._my_db[dbname].git_url,
                 dbname+'-branch': self._my_db[dbname].git_branch,
             })
+            init_sub = self._my_db[dbname]._my_spec.get('init-submodules')
+            if init_sub is not None:
+                self.default_set('init-submodules', init_sub)
 
     """[private]"""
     def __init__(self, name, spec, conf):
