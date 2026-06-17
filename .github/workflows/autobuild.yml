@@ -15,7 +15,7 @@ jobs:
   build-all:
     strategy:
       matrix:
-        os: [ ubuntu-22.04, ubuntu-24.04 ]
+        os: [ ubuntu-22.04, ubuntu-24.04, ubuntu-26.04, ubuntu-latest ]
     name: on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 1440
