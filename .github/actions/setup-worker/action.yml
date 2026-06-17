@@ -47,10 +47,3 @@ runs:
     - name: Create cache/tmp dir
       run: sudo mkdir -p /tmp/dck-buildpackage ; sudo chmod 777 /tmp/dck-buildpackage
       shell: bash
-
-    - name: Cache base rootfs
-      id: cache-rootfs
-      uses: actions/cache@v4
-      with:
-        path: /tmp/dck-buildpackage/debootstrap-tarballs
-        key: rootfs

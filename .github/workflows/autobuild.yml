@@ -12,19 +12,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-all:
+  bootstrap:
+    name: bootstrap rootfs
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1440
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-worker
+
+      - name: Build all base images
+        run: find cf/repos/ -name "*.yml" -exec "./repo-build-baseimage" "{}" ";"
+
+      - name: Upload rootfs tarballs
+        uses: actions/upload-artifact@v4
+        with:
+          name: rootfs-tarballs
+          path: /tmp/dck-buildpackage/debootstrap-tarballs/
+          if-no-files-found: ignore
+
+  build:
+    needs: bootstrap
     strategy:
       matrix:
         os: [ ubuntu-22.04, ubuntu-24.04, ubuntu-26.04, ubuntu-latest ]
-    name: on ${{ matrix.os }}
+    name: build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 1440
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-worker
 
-      # cache apt repo and state, so we don't need full rebuild every time
-      # note: for different branches, need different name
+      - name: Download rootfs tarballs
+        uses: actions/download-artifact@v4
+        with:
+          name: rootfs-tarballs
+          path: /tmp/dck-buildpackage/debootstrap-tarballs/
+
+      - name: Import base images from tarballs
+        run: find cf/repos/ -name "*.yml" -exec "./repo-build-baseimage" "{}" ";"
 
       - name: Cache apt repo and state files
         id: cache-repo
@@ -38,11 +63,6 @@ jobs:
             repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ env.CONFIG_HASH }}
             repobuild-${{ matrix.os }}+${{ github.ref_name }}@
 
-      # run the actual builders
-
-      - name: Build all base images
-        run: find cf/repos/ -name "*.yml" -exec "./repo-build-baseimage" "{}" ";"
-
       - name: Run builders
         run: |
           for scr in ./build.* ; do
@@ -53,8 +73,6 @@ jobs:
           done
         env:
           DEBPKG_GITHUB_ANONYMOUS: 1
-
-      # upload the generated apt repo as artifact
 
       - name: Archive final apt repo
         uses: actions/upload-artifact@v4
