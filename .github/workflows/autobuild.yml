@@ -79,3 +79,31 @@ jobs:
         with:
           name: aptrepo-built-on-${{ matrix.os }}-branch-${{ env.BRANCH_IDENT }}
           path: .aptrepo
+
+  deploy:
+    if: github.ref_name == 'master' && github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download apt repo
+        uses: actions/download-artifact@v6
+        with:
+          name: aptrepo-built-on-ubuntu-22.04-branch-master
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .aptrepo
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
