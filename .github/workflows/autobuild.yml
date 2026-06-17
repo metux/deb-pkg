@@ -17,14 +17,14 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 1440
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-worker
 
       - name: Build all base images
         run: find cf/repos/ -name "*.yml" -exec "./repo-build-baseimage" "{}" ";"
 
       - name: Upload rootfs tarballs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: rootfs-tarballs
           path: /tmp/dck-buildpackage/debootstrap-tarballs/
@@ -39,11 +39,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 1440
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-worker
 
       - name: Download rootfs tarballs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: rootfs-tarballs
           path: /tmp/dck-buildpackage/debootstrap-tarballs/
@@ -53,7 +53,7 @@ jobs:
 
       - name: Cache apt repo and state files
         id: cache-repo
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ${{ github.workspace }}/.aptrepo
@@ -75,7 +75,7 @@ jobs:
           DEBPKG_GITHUB_ANONYMOUS: 1
 
       - name: Archive final apt repo
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: aptrepo-built-on-${{ matrix.os }}-branch-${{ env.BRANCH_IDENT }}
           path: .aptrepo
