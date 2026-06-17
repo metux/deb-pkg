@@ -28,7 +28,7 @@ runs:
 
     - name: Cache gpg key
       id: cache-gpg
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.gnupg
         key: gnupg
@@ -46,7 +46,7 @@ runs:
 
     - name: Cache base rootfs
       id: cache-rootfs
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: /tmp/dck-buildpackage/debootstrap-tarballs
         key: rootfs
