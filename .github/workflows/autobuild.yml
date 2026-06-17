@@ -33,7 +33,7 @@ jobs:
           path: |
             ${{ github.workspace }}/.aptrepo
             ${{ github.workspace }}/.stat
-          key: repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ env.CONIFG_HASH }}
+          key: repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ env.CONFIG_HASH }}
           restore-keys: |
             repobuild-${{ matrix.os }}+${{ github.ref_name }}@${{ env.CONFIG_HASH }}
             repobuild-${{ matrix.os }}+${{ github.ref_name }}@
