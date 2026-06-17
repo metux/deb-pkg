@@ -1,50 +1,93 @@
+## General
 
-Q: How to start simple build ?
+### Q: How to start a build ?
 
-A: Pick an example config (e.g. from `cf/repos/...`) and call the `repo-build-pool`
-   with config file name and pool name as arguments (pool usually is `default`)
+Pick a config from `cf/repos/...` and call `repo-build-pool`:
 
----
+    ./repo-build-pool cf/repos/devuan/sidplayfp.yml
 
-Q: What does 'pool' mean here ?
+This builds all pools listed under `defaults::build-pool`. To build a specific
+pool:
 
-A: Pools are used for organizing sets of packages. Each pool lives entirely on
-   it's own, using an own apt repository (in `.aptrepo/<pool>`).
+    ./repo-build-pool cf/repos/devuan/sidplayfp.yml sidplayfp-release
 
----
+### Q: What does 'pool' mean here ?
 
-Q: How can I define which distros to build for ?
+Pools organize sets of packages. Each pool gets its own apt repository under
+`.aptrepo/<pool-name>/`. Pools can have different versions of the same
+upstream package (e.g. stable release vs. master branch).
 
-A: Use dck-buildpackage's target configs. The `targets:` section in the config
-   yml tells the dck-buildpackage's target names.
+### Q: How to define which distros to build for ?
 
----
+The `targets:` section in the config references target definitions under
+`cf/targets/`. Each target specifies a dck-buildpackage container image.
 
-Q: How can I build for Devuan ? (debootstrap fails to find script 'ascii')
+### Q: How to handle inter-package dependencies ?
 
-A: Debian's and Ubuntu's version of debootstrap don't know about Devuan releases.
-   Just chdir to /usr/share/deboootstrap/scripts/ and create symlinks named by
-   the Devuan release (eg. 'ascii') pointing to 'sid'.
+Add `depends:` to the package entry referencing another package by config name.
+The builder resolves the dependency tree automatically and adds previously
+built packages as apt sources during dependent builds.
 
----
+### Q: How to force a rebuild ?
 
-Q: Where can I get dck-buildpackage ? What is that anyways ?
+Remove the corresponding state file in `.stat/`. For example:
 
-A: It's a little tool for building debian packages in docker containers.
-   See: https://github.com/metux/docker-buildpackage
+    rm .stat/build.default.devuan/excalibur/amd64.sidplayfp@3.0.2
 
----
+## Configuration
 
-Q: How can I build packages that depend on others (that aren't in the distro yet) ?
+### Q: What do the CSDB directories do ?
 
-A: Just add the dependencies to the packages (note: the names you're using in the
-   config, not the debian package names). The packages will be built along the
-   dependency tree and placed into the pool's repo. This repo is also added to
-   the build container's package sources, so apt can automatically install the
-   previously built packages from there.
+`cf/csdb/` holds git source configs in four layers:
 
----
+- **upstream/** — original upstream repos
+- **debian/** — debian packaging repos (if separate)
+- **oss-qm/** — oss-qm forks with debianization branches
+- **oss-qm-pub/** — public oss-qm repos
 
-Q: How can I trigger rebuild of packages that I already had built ?
+These populate `git.url` and `git.branch` for each package. Later layers
+override earlier ones.
 
-A: Remove the corresponding state files in `.stat/`
+### Q: How does versioning work ?
+
+Package names use `name@version` (e.g. `libresidfp@1.0.2`). The version part
+is substituted into branch templates via `${package.version}`, so
+`debian/maint-${package.version}` becomes `debian/maint-1.0.2`.
+
+### Q: Can I have multiple pools with different versions ?
+
+Yes. Define multiple pools in the config with different package versions.
+Each pool has its own apt repository and build state.
+
+### Q: How to build packages that aren't in the target distro yet ?
+
+Add them as dependencies in the config. The builder will build them first and
+add the pool's apt repo as an additional source for subsequent builds.
+
+### Q: How to build for Devuan ? (debootstrap fails to find script)
+
+Debian's debootstrap doesn't know Devuan release names. Symlink them:
+
+    cd /usr/share/debootstrap/scripts
+    sudo ln -s sid ascii
+    sudo ln -s sid beowulf
+    sudo ln -s sid chimaera
+    sudo ln -s sid daedalus
+    sudo ln -s sid excalibur
+
+### Q: Where to get dck-buildpackage ?
+
+    https://github.com/metux/docker-buildpackage
+
+## Troubleshooting
+
+### Q: Build fails with GPG signing errors ?
+
+Ensure the signing key is set in the environment, or disable signing:
+
+    export DCK_BUILDPACKAGE_SIGNKEY=none
+
+### Q: Package build hangs ?
+
+Check that Docker has enough resources (RAM, disk space). The base image
+build can take a while on first run.
