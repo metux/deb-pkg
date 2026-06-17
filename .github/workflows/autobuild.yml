@@ -32,6 +32,9 @@ jobs:
 
   build:
     needs: bootstrap
+    permissions:
+      pages: write
+      id-token: write
     strategy:
       matrix:
         os: [ ubuntu-22.04, ubuntu-24.04, ubuntu-26.04, ubuntu-latest ]
@@ -74,8 +77,30 @@ jobs:
         env:
           DEBPKG_GITHUB_ANONYMOUS: 1
 
-      - name: Archive final apt repo
-        uses: actions/upload-artifact@v6
+      - name: Generate index pages
+        if: github.ref_name == 'master' && github.event_name == 'push' && matrix.os == 'ubuntu-22.04'
+        run: .github/scripts/gen-index-pages.sh
+
+      - name: Upload Pages artifact
+        if: github.ref_name == 'master' && github.event_name == 'push' && matrix.os == 'ubuntu-22.04'
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: aptrepo-built-on-${{ matrix.os }}-branch-${{ env.BRANCH_IDENT }}
           path: .aptrepo
+
+  deploy:
+    if: github.ref_name == 'master' && github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
