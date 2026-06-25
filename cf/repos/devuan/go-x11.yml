@@ -1,0 +1,34 @@
+# go-x11proto: pure-Go X11 protocol library + toolkit.
+#
+# Builds three binary packages from one source (see debian/ on the
+# debian/maint-master branch of the upstream repo):
+#   - golang-github-x11libre-go-x11proto-dev  (the Go library sources)
+#   - xnamespace                              (X-NAMESPACE client tool)
+#   - tetris64                                (demo game)
+#
+# Targets excalibur (current stable) and newer; their default golang is >= 1.22,
+# which the build needs (golang-any (>= 2:1.22~)). Older releases are left out.
+
+targets:
+    - devuan/excalibur/amd64
+    - devuan/excalibur/i386
+    - devuan/testing/amd64
+    - devuan/testing/i386
+    - devuan/unstable/amd64
+    - devuan/unstable/i386
+
+defaults:
+    build-pool:
+        - go-x11
+    packages:
+        autobuild-ref:    upstream/debian/maint-${package.version}
+        autobuild-local:  debian/maint-${package.version}
+
+packages:
+
+    go-x11proto@master:
+
+pools:
+    go-x11:
+        packages:
+            - go-x11proto@master

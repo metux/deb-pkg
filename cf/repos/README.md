@@ -20,6 +20,14 @@ Container toolchain packages (runc, containerd, nerdctl, docker-cli) for
 multiple Devuan releases (chimaera, daedalus, testing, unstable). Includes
 golang toolchain bootstrapping.
 
+### `devuan/go-x11.yml`
+
+The pure-Go X11 protocol library and toolkit (`go-x11proto`), built for
+multiple Devuan releases. One source produces three binary packages:
+`golang-github-x11libre-go-x11proto-dev` (library sources), `xnamespace`
+(X-NAMESPACE client tool) and `tetris64` (demo game). Single pool **go-x11**.
+Needs Go >= 1.22 in the build environment.
+
 ### `mixed/wine.yml`
 
 Wine 10.20 for both Debian Bookworm and Devuan Daedalus.

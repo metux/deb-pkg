@@ -1,0 +1,3 @@
+---
+git.url:    https://github.com/X11Libre/${package.name}.git
+git.branch: debian/maint-${package.version}
