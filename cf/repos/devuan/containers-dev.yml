@@ -1,15 +1,26 @@
+# container tools: runc, containerd, containerd-cgroups, docker-cli, nerdctl.
+#
+# Targets excalibur (current Devuan stable) and newer. Their native golang
+# toolchain is >= 1.22, which satisfies every package's Build-Depends:
+#   - runc:               golang-any (>= 1.19)
+#   - containerd:         golang-any (>= 1.20)
+#   - containerd-cgroups: golang-any (>= 1.18)
+#   - docker-cli:         golang-any (>= 1.18~)
+#   - nerdctl:            golang-any (>= 1.20)
+# All depend on golang-any (no pinned golang-1.NN), so the distro's native
+# golang is enough and no golang toolchain bootstrap is needed.
+#
+# Older releases (beowulf/chimaera/daedalus) are dropped: they needed a
+# bootstrapped golang toolchain (golang-defaults/golang-go) which no longer
+# builds (Go 1.20.7's hardcoded crypto/tls testdata certs have expired).
+
 targets:
-    - devuan/chimaera/amd64
-    - devuan/chimaera/i386
-    - devuan/daedalus/amd64
-    - devuan/daedalus/i386
-    - devuan/testing/i386
+    - devuan/excalibur/amd64
+    - devuan/excalibur/i386
     - devuan/testing/amd64
-    - devuan/unstable/i386
+    - devuan/testing/i386
     - devuan/unstable/amd64
-# beowulf yet needs a debhelper upgrade (>=13) for golang-defaults-1.19
-#    - devuan/beowulf/amd64
-#    - devuan/beowulf/i386
+    - devuan/unstable/i386
 
 defaults:
     packages:
@@ -18,59 +29,19 @@ defaults:
 
 packages:
 
-### upgrade golang toolchain, if necessary
-
-    golang-defaults@1.19:
-        autobuild-ref:    debian/2%1.19_1_bpo11+1
-        skip-on-target:
-            - devuan/daedalus/amd64
-            - devuan/daedalus/i386
-            - devuan/testing/i386
-            - devuan/testing/amd64
-            - devuan/unstable/i386
-            - devuan/unstable/amd64
-
-    golang-defaults@1.20:
-        autobuild-ref:    debian/2%1.20_2
-        depends:
-            - golang-go@1.20.7
-        skip-on-target:
-            - devuan/testing/i386
-            - devuan/testing/amd64
-            - devuan/unstable/i386
-            - devuan/unstable/amd64
-
-    golang-go@1.20.7:
-        depends:
-            golang-defaults@1.19
-        skip-on-target:
-            - devuan/testing/i386
-            - devuan/testing/amd64
-            - devuan/unstable/i386
-            - devuan/unstable/amd64
-
 ### container tools
 
     runc@master:
-        depends:
-            - golang-defaults@1.19
 
     containerd-cgroups@master:
-        depends:
-            - golang-defaults@1.19
 
     containerd@master:
         depends:
-            - golang-defaults@1.20
             - runc@master
 
     docker-cli@master:
-        depends:
-            - golang-defaults@1.19
 
     nerdctl@master:
-        depends:
-            - golang-defaults@1.20
 
 pools:
     default:
