@@ -1,0 +1,20 @@
+targets:
+    - devuan/excalibur/amd64
+    - devuan/excalibur/i386
+
+defaults:
+    build-pool:
+        - repo-master
+    packages:
+        autobuild-ref:    oss-qm/debian/maint-${package.version}
+        autobuild-local:  debian/maint-${package.version}
+
+packages:
+
+    git-repo@master:
+        autobuild-ref:    debian/master
+
+pools:
+    repo-master:
+        packages:
+            - git-repo@master
